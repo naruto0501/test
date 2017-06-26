@@ -1,24 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="avicit.platform6.commons.utils.ViewUtil"%>
-<%@page import="avicit.platform6.api.session.SessionHelper"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>单位列表</title>
-<base href="<%=ViewUtil.getRequestPath(request)%>">
-<jsp:include page="/avicit/platform6/component/common/EasyUIJsInclude.jsp"></jsp:include>
-<jsp:include page="/avicit/platform6/modules/system/commonpopup/commonSelectionHead.jsp"></jsp:include>
+
 <script src="static/js/platform/component/common/exteasyui.js" type="text/javascript"></script>
 
 </head>
-<%
-	long timestamp = System.currentTimeMillis();
-	String language =SessionHelper.getCurrentUserLanguageCode(request);
-	String appId = SessionHelper.getApplicationId();
-	String tableId = request.getParameter("tableId");
-%>
+
 <body>
 <body class="easyui-layout"  fit="true">
 <div data-options="region:'north',split:false,title:''" style="height: 70px; padding:0px;">	
@@ -50,7 +41,7 @@
 <div data-options="region:'center',split:true,border:false" style="overflow:hidden;padding-bottom:45px;">	
 		<input  id="columnId"  value="${columnId}"   type="hidden"  />
 		<input  id="tableId"  value="${tableId}"   type="hidden"  />
-		<table id="tablelookup" class="easyui-datagrid"  fit="true"  pagination="true" rownumbers="true" fitColumns="true" singleSelect="true" autoRowHeight="false" striped="true" url="platform/eform/tabledefine/<%=timestamp%>/<%=appId%>/<%=language%>/allSysLookupType.json"      data-options="onLoadSuccess:cellTip"> 
+		<table id="tablelookup" class="easyui-datagrid"  fit="true"  pagination="true" rownumbers="true" fitColumns="true" singleSelect="true" autoRowHeight="false" striped="true" url="platform/eform/tabledefine/allSysLookupType.json"      data-options="onLoadSuccess:cellTip"> 
 								<thead>
 										<tr> 
 								        	<th data-options="field:'id', halign:'center',checkbox:true" width="220">id</th>
