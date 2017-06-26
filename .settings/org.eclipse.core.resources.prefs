@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/main/resources/conf/common.properties=UTF-8
+encoding//src/main/webapp/errorpage/404.jsp=UTF-8
+encoding//src/main/webapp/jsp/login/login_success.jsp=UTF-8
+encoding//src/main/webapp/jsp/module/sysuser/sys_user_add.jsp=UTF-8
+encoding//src/main/webapp/jsp/test.jsp=UTF-8

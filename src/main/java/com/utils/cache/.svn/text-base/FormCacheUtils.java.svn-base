@@ -1,0 +1,156 @@
+package avicit.platform6.eform.cache;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.core.GenericType;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import avicit.platform6.api.syslookup.SysLookupAPI;
+import avicit.platform6.api.syslookup.dto.SysLookupSimpleVo;
+import avicit.platform6.core.rest.client.RestClient;
+import avicit.platform6.core.rest.client.RestClientConfig;
+import avicit.platform6.core.rest.msg.ResponseMsg;
+import avicit.platform6.core.rest.msg.ResponseStatus;
+import avicit.platform6.eform.dto.EformTabColumns;
+import avicit.platform6.eform.dto.EformTabVersion;
+import avicit.platform6.eform.dto.EformTables;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@Component
+public class FormCacheUtils {
+	
+	private final static String LIST_LOOKUP_COLUMN="/api/platform6/eform/tabcolumns/listLookUpAll/v1";
+	private final static String LIST_TABLE="/api/platform6/eform/tabledefine/listAll/v1";
+	private final static String GET_TABLE="/api/platform6/eform/tabledefine/get/v1";
+	static Logger logger = LoggerFactory.getLogger(FormCacheUtils.class);
+	
+	@Autowired
+	private SysLookupAPI sysLookupAPI;
+	
+	@Autowired
+    private RedisClient redisClient;
+	
+	
+	public List<EformTabColumns> getColumnsBytableId(String tableId,String lang,String version)throws Exception{
+		String key="platform6:eform:column:"+tableId+":"+version;
+		String json=this.redisClient.getObjectByKey(key);
+		if(json!=null&&!"null".equals(json)){
+			ObjectMapper objectMapper=new ObjectMapper();
+			return  objectMapper.readValue(json, new TypeReference<List<EformTabColumns>>(){});
+		}else{
+				EformTabColumns entity =new EformTabColumns();
+				entity.setTableId(tableId);
+				entity.setAttribute08(version);
+				String restHost = RestClientConfig.getRestHost(RestClientConfig.eform);
+				String restURL = restHost + LIST_LOOKUP_COLUMN;
+				ResponseMsg<List<EformTabColumns>> responseMsg = RestClient.doPost(restURL, entity, new GenericType<ResponseMsg<List<EformTabColumns>>>(){});
+				if(responseMsg.getRetCode().equals(ResponseStatus.HTTP_OK)){ //成功
+					logger.debug("调用rest服务成功：" + restURL);
+				}else{ //失败
+					logger.info("调用rest服务出错：:" + restURL + "," + responseMsg.getRetCode()+","+responseMsg.getErrorDesc());
+				}
+				
+				List<EformTabColumns> list=responseMsg.getResponseBody();
+				List<EformTabColumns> result=new ArrayList<EformTabColumns>();
+				
+				for(EformTabColumns item:list){
+//					if(item.getColType().equals("BLOB")||item.getColType().equals("CLOB")){
+//						logger.info("blob clob 不参与表单展示");
+//					}else{
+						if(item.getAttribute01()!=null){
+							List<SysLookupSimpleVo> lookup=(List<SysLookupSimpleVo>) sysLookupAPI.getLookUpListByTypeByAppIdWithLg(item.getAttribute01(), RestClientConfig.systemid,lang);
+							if("Y".equals(item.getColIsMust())){
+								item.setSysLookupList(lookup);
+							}else{
+								if("text".equals(item.getElementType())){
+									item.setSysLookupList((List<SysLookupSimpleVo>)sysLookupAPI.enhanceLookupcode(lookup));
+								}else{
+									item.setSysLookupList(lookup);
+								}
+							}
+						}
+						result.add(item);
+//					}
+				}
+				ObjectMapper objectMapper=new ObjectMapper();
+				this.redisClient.putObjectWithExpire(key, objectMapper.writeValueAsString(result), 900);
+				return result;
+		}
+		
+	}
+	
+	
+	public EformTables getTablesBytableName(String tableName)throws Exception{
+		String key="platform6:eform:table:"+tableName;
+		String json=this.redisClient.getObjectByKey(key);
+		if(json!=null&&!"null".equals(json)){
+			ObjectMapper objectMapper=new ObjectMapper();
+			return  objectMapper.readValue(json, EformTables.class);
+		}else{
+			EformTables record =new EformTables();
+			record.setTableName(tableName);
+			String restHost = RestClientConfig.getRestHost(RestClientConfig.eform);
+			String restURL = restHost + LIST_TABLE;
+			ResponseMsg<List<EformTables>> responseMsg = RestClient.doPost(restURL, record, new GenericType<ResponseMsg<List<EformTables>>>(){});
+			if(responseMsg.getRetCode().equals(ResponseStatus.HTTP_OK)){ //成功
+				logger.debug("调用rest服务成功：" + restURL);
+			}else{ //失败
+				logger.info("调用rest服务出错：:" + restURL + "," + responseMsg.getRetCode()+","+responseMsg.getErrorDesc());
+			}
+			EformTables eformtables=responseMsg.getResponseBody().get(0);
+			ObjectMapper objectMapper=new ObjectMapper();
+			this.redisClient.putObjectWithExpire(key, objectMapper.writeValueAsString(eformtables), 900);
+			return eformtables;
+		}
+		
+	}
+	
+	public EformTables getTablesBytableId(String tableId)throws Exception{
+		String key="platform6:eform:table:"+tableId;
+		String json=this.redisClient.getObjectByKey(key);
+		if(json!=null&&!"null".equals(json)){
+			ObjectMapper objectMapper=new ObjectMapper();
+			return  objectMapper.readValue(json, EformTables.class);
+		}else{
+				String restHost = RestClientConfig.getRestHost(RestClientConfig.eform);
+				String restURL = restHost + GET_TABLE;
+				ResponseMsg<EformTables> responseMsg = RestClient.doPost(restURL, tableId, new GenericType<ResponseMsg<EformTables>>(){});
+				if(responseMsg.getRetCode().equals(ResponseStatus.HTTP_OK)){ //成功
+					logger.debug("调用rest服务成功：" + restURL);
+				}else{ //失败
+					logger.info("调用rest服务出错：:" + restURL + "," + responseMsg.getRetCode()+","+responseMsg.getErrorDesc());
+				}
+				EformTables eformtables=responseMsg.getResponseBody();
+				ObjectMapper objectMapper=new ObjectMapper();
+				this.redisClient.putObjectWithExpire(key, objectMapper.writeValueAsString(eformtables), 900);
+				return eformtables;
+		}
+	}
+	
+	
+	
+	public void del(String key)throws Exception{
+		this.redisClient.delObjectByKey(key);
+	}
+
+
+	public void delkeys(String key, String tableId,List<EformTabVersion> versionList) {
+			for(EformTabVersion item:versionList){
+				this.redisClient.delObjectByKey(key+":"+tableId+":"+item.getVersionValue());
+			}
+	}
+
+
+
+
+	
+	
+
+}

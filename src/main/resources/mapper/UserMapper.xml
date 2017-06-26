@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc.sysuser.dao.UserDAO">
+            
+         <insert id="insertUser" parameterType="User" keyProperty="id">
+             insert into days_user( 
+         id,
+         state,
+         nickname,
+         username,
+         password)
+         values
+         (    
+         #{id},   
+         #{state},
+         #{nickname},
+         #{username},
+         #{password})
+         </insert>
+         
+         <update id="updateUer" parameterType="User">
+         	update days_user t1 
+         	<set>
+         		<if test="state != null and state != ''">
+         			t1.state = #{state},
+         		</if>
+         		<if test="nickname != null and nickname != ''">
+         			t1.nickname = #{nickname},
+         		</if>
+         		<if test="username != null and username != ''">
+         			t1.username = #{username},
+         		</if>
+         		<if test="password != null and password != ''">
+         			t1.password = #{password},
+         		</if>
+         	</set>
+         	where t1.id = #{id}	
+         </update>
+         
+         <delete id="deleteUser" parameterType="String">
+         	delete from days_user t1 where t1.id = #{id}
+         </delete>
+          
+         <select id="selectUserByID" parameterType="String" resultType="User">
+       		select * from days_user t1 where t1.id = #{id}
+   		 </select>
+   		 
+   		 <select id="checkLogin" resultType="int">
+       		select count(*) from days_user t1 where t1.username = #{0} and t1.password = #{1}
+   		 </select>
+   		 
+   		 <select id="selectUserByUsername" parameterType="String" resultType="User">
+       		select * from days_user t1 where t1.username = #{username}
+   		 </select>
+   		 
+   		 <select id="selectUserList" resultType="User">
+   		 	select * from days_user t1
+   		 </select>
+   		 
+   		 <select id="selectUserPage" resultType="User">
+   		 	select * from days_user t1
+   		 </select>
+   		 
+   		 <select id="checkUsername" resultType="int">
+       		select count(*) from days_user t1 where t1.username = #{0}
+   		 </select>
+       
+</mapper>

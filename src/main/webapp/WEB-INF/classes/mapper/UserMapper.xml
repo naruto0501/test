@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc.sysuser.dao.UserDAO">
+            
+         <insert id="insertUser" parameterType="User" keyProperty="id">
+             insert into days_user( 
+         id,
+         state,
+         nickname,
+         username,
+         password)
+         values
+         (    
+         #{id},   
+         #{state},
+         #{nickname},
+         #{username},
+         #{password})
+         </insert>
+          
+         <select id="selectUserByID" parameterType="int" resultType="User">
+       		select * from days_user where id = #{id}
+   		 </select>
+   		 
+   		 <select id="checkLogin" resultType="int">
+       		select count(*) from days_user where username = #{0} and password = #{1}
+   		 </select>
+   		 
+   		 <select id="selectUserByUsername" parameterType="String" resultType="User">
+       		select * from days_user where username = #{username}
+   		 </select>
+   		 
+   		 <select id="selectUserList" resultType="User">
+   		 	select * from days_user
+   		 </select>
+   		 
+   		 <select id="checkUsername" resultType="int">
+       		select count(*) from days_user where username = #{0}
+   		 </select>
+       
+</mapper>

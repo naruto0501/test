@@ -1,0 +1,495 @@
+<!doctype html> 
+<html ng-app = "app">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<meta http-equiv="pragma" content="no-cache">
+    	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    	<script src="http://cdn.bootcss.com/angular.js/1.3.9/angular.js"></script> 
+     	<!-- <script src="http://cdn.bootcss.com/angular.js/1.3.9/angular-sanitize.js"></script> -->
+
+		<script>
+		//alert(localStorage);
+		//localStorage.xxx = {};
+
+		angular.module("app",[])
+		.run(function($rootScope){
+			
+		})
+		
+		.controller("uicontroller",["$scope","$log","$interval","$sce","kernal",function($scope, $log,$interval,$sce,kernal){
+			$scope.handler = 0;
+     		$scope.start = function(){
+
+				
+				$scope.handler = $interval(function(){
+					kernal.doNext();
+					$scope.content = $sce.trustAsHtml(kernal.getcontent());
+					$scope.shp = kernal.getChar().data.hp;
+					$scope.smhp = kernal.getChar().data.hpmax;
+					$scope.slevel = kernal.getChar().data.level;
+					$scope.sexp = kernal.getChar().data.exp;
+					$scope.smexp = kernal.getChar().data.expmax;
+					$scope.ehp = kernal.getEnemy().data.hp;
+					$scope.sexp = kernal.getChar().data.exp;
+     				//$scope.$apply();
+				},1000);
+
+			
+				
+     		};
+
+     		$scope.stop = function(){
+     		 	$interval.cancel($scope.handler);
+     		};
+
+		}])
+
+		.directive('pane',function(){
+			
+		})
+
+
+		.factory('kernal',["$interval","$log", "itemdata", "messagebuffer", "battle","tools","enemydata","selfdata",function($interval,$log,itemdata,messagebuffer,battle,tools,enemydata,selfdata){
+			return{
+				
+				contentbuffer : [],
+
+				getChar : function(){
+					return selfdata;
+				},
+				getEnemy : function(){
+					return battle._enemy;
+				},
+
+				addcontent : function(str){
+					if (this.contentbuffer.length==10){
+						this.contentbuffer.shift();
+						this.contentbuffer.push(str);
+					}else{
+						this.contentbuffer.push(str);
+					}
+				},
+				getcontent : function(){
+					var res = "";
+					for (var i=0; i<this.contentbuffer.length;++i){
+						res += this.contentbuffer[i] + "<br/>";
+					}
+					return res;
+				},
+				save : function(){
+
+				},
+
+				
+
+				echo : function(){
+					if (messagebuffer.getLength()>0){
+						var res = messagebuffer.next();
+						this.addcontent(res.desc);
+						return 1;
+					}
+					return 0;
+				},
+
+				doNext : function(){
+
+					if (1==this.echo()) return;
+					if (battle._bFinished){
+						if (tools.checkRandom100(10)){
+							this.addcontent("do sth unuse");
+							return this.doNext();
+						}else{
+							var enemy = enemydata.getEnemy("normal",0, 10);
+							enemy.data.init();
+							//$log.info(enemy);
+							battle.create(selfdata, enemy);
+							return;
+						}
+					}else{
+						battle.getNext();
+					}
+					if (0==this.echo()){
+						
+						this.doNext();
+					}
+
+				}
+          
+      		}
+		}])
+
+		.factory('itemdata',["$log", "tools" ,function($log, tools){
+			return {
+				data : [
+					{
+						id : 0, name : "hat", type : "equip", subtype : "hat", droplevel: 0,  price: 1,
+						countable: false, content : {atk: 0, def: 10},
+					},
+					{	id : 1, name : "coat", type : "equip", subtype : "coat", droplevel: 0,  price: 1,
+						countable: false, content : {atk: 0, def: 10},
+					},
+					{
+						id : 2, name : "short swort", type : "equip", subtype : "weapon", droplevel: 0,  price: 1,
+						countable: false, content : {atk: 10, def: 0},
+					},
+
+				],
+
+				getRandomItem : function(type,levelfrom, levelto){
+					var list = new Array();
+					for (var i=0; i<this.data.length; ++i){
+						if (this.data[i].type == type && this.data[i].droplevel >= levelfrom && this.data[i].droplevel <= levelto )
+							list.push(this.data[i]);
+					}
+					if (list.length == 0)
+						return null;
+					return list[tools.random(list.length)];
+				},
+				compare : function(equip1, equip2){
+					if (equip1.type != equip2.type || equip1.subtype != equip2.subtype)
+						return false;
+					if (equip1.content.atk>equip2.content.atk || equip1.content.def>equip2.content.def)
+						return true;
+					return false;
+				},
+
+			};
+		}])
+		.factory('enemydata',["$log","skilldata","aidefault","tools",function($log, skilldata,aidefault,tools){
+			return {
+				data : [
+					{
+						name : "liuyk",
+						level : 0,
+						type : "normal",
+						hp : 50,
+						hpmax : 50,
+						mp : 100,
+						mpmax : 50,
+						atk : 10,
+						def : 0,
+						ctk : 0, 
+						money : 20,
+						droplevel : 0,
+						exp : 10,
+						equips : [],
+						skills : [{id:0,level:0}],
+						init : function(){
+							this.hp = this.hpmax;
+							this.mp = this.mpmax;
+						},
+					},
+					{
+						name : "liuyk2",
+						level : 0,
+						type : "boss",
+						hp : 200,
+						mp : 100,
+						atk : 20,
+						def : 0,
+						ctk : 0, 
+						money : 200,
+						droplevel : 0,
+						exp : 20,
+						equips : [],
+						skills : [{id:0,level:1}],
+					}
+				],
+
+				getEnemy : function(type,levelfrom, levelto){
+					var list = new Array();
+					for (var i=0; i<this.data.length; ++i){
+						if (this.data[i].type == type && this.data[i].droplevel >= levelfrom && this.data[i].droplevel <= levelto )
+							list.push(this.data[i]);
+					}
+					if (list.length == 0)
+						return null;
+
+					var obj = {};
+					obj.data = list[tools.random(list.length)];
+					obj.ai = aidefault.ai;
+					return obj;
+
+				},
+			};
+			
+		}])
+		.factory('aidefault',["$log",function($log){
+			return {
+				ai : function(self, target){
+					//0:attack 1:run 2:heal
+					//main决策类别 sub子类别(attack时为skill index)
+					return {main:0, sub:0}; 
+				}
+
+			};
+		}])
+		.factory('skilldata',["$log",function($log){
+			return {
+				data : [
+					{id : 0, name: "normal attack", content : [{level:0, pow:10, cost: 0},{level:1, pow:15, cost:0}]},
+					{id : 1, name: "fireball", content : [{level:0, pow:10, cost:10},{level:1, pow:15, cost:15}]},
+				],
+				getPower : function (id, level){return this.data[id].content[level].pow},
+				getCost : function (id, level){return this.data[id].content[level].cost},
+				getName : function (id){return this.data[id].name},
+
+			};
+		}])
+		.factory('regiondata',["$log",function($log){
+			return {
+				data : [
+					{name: "", levelbase: 0, leveloffset: 5},
+				],
+
+			};
+		}])
+		.factory('leveldata',["$log",function($log){
+			return {
+				data : [
+					{level: 0, hp: 100, mp: 100, atk: 10, def: 0, nextExp : 100},
+					{level: 1, hp: 200, mp: 200, atk: 11, def: 1, nextExp : 200},
+					{level: 2, hp: 300, mp: 300, atk: 12, def: 2, nextExp : 300},
+					{level: 3, hp: 400, mp: 400, atk: 13, def: 2, nextExp : 400},
+					{level: 4, hp: 500, mp: 500, atk: 14, def: 2, nextExp : 500},
+					{level: 5, hp: 600, mp: 600, atk: 15, def: 2, nextExp : 600},
+					{level: 6, hp: 700, mp: 700, atk: 17, def: 2, nextExp : 700},
+				],
+				getLevelData: function(level){
+					//return data[i];
+					var obj = {};
+					obj.level = level;
+					obj.hp = 100*(1+level);
+					obj.mp = 100*(1+level);
+					obj.atk = 10 + level;
+					obj.def = level;
+					obj.nextExp = 100*(1+level);
+					return obj;
+				}
+
+			};
+		}])
+		.factory('battle',["$log", "skilldata" , "tools" ,"messagebuffer",function($log, skilldata, tools, messagebuffer){
+			return {
+				_char : {},
+				_enemy : {},
+				_bFinished : true,
+				_turn : 0,
+				create : function(char, enemy){
+					this._char = char;
+					this._enemy = enemy;
+					this._bFinished = false;
+					this._turn = 0;
+					messagebuffer.add({status:0, desc: char.data.name + " begin battle with " + enemy.data.name});
+				},
+				attack : function (c1, c2, skill){
+					//skills : [{id:0,level:1}],
+
+					//{status:0, decs:"sth intresting"}
+					var sid = skill.id;
+					var slevel = skill.level;
+
+					var spow = skilldata.getPower(sid, slevel);
+					var scost = skilldata.getCost(sid, slevel);
+					var sname = skilldata.getName(sid);
+
+					var damage = parseInt((c1.data.atk + 100)/100 * spow - c2.data.def);
+					if (damage < 1)
+						damage = 1;
+					c2.data.hp -= damage;
+					if (c2.data.hp<= 0)
+						c2.data.hp = 0;
+
+					messagebuffer.add({status:0, desc: c1.data.name + " use " + sname +" hit " + c2.data.name + " damage " + damage});
+				},
+				checkFinish : function (){
+					if (this._char.data.hp == 0){
+						messagebuffer.add({status:1, desc:this._char.data.name + " dead"});
+						this._char.wake();
+						return {status:1, desc:this._char.data.name + " feel good"}
+					}
+					if (this._enemy.data.hp == 0){
+						this._char.data.exp += this._enemy.data.exp;
+						//这里loot
+						return {status:1, desc:this._enemy.data.name + " dead, exp earn " + this._enemy.data.exp}
+					}
+					return {status : 0};
+				},
+				getNext : function (){
+
+					var rf = this.checkFinish();
+
+					if (rf.status == 1){
+
+						//finish
+						this._bFinished = true;
+						this._char.calculate();
+						messagebuffer.add(rf);
+
+						return rf;
+					}
+					if (tools.checkRandom100(10)){
+						messagebuffer.add({status:0, desc:"sth intresting"});
+						return {status:0, decs:"sth intresting"}
+					}
+
+					if (this._turn == 0){
+						var res = this._char.ai(this._char,this. _enemy);
+						//{main:0, sub:0};
+						if (res.main == 0){
+							var skill = this._char.data.skills[res.sub];
+							this._turn = 1;
+							return this.attack (this._char,this._enemy, skill);
+						}
+						return "do nothing";
+					}else {
+						var res = this._enemy.ai(this._enemy,this._char );
+						//{main:0, sub:0};
+						if (res.main == 0){
+							var skill = this._enemy.data.skills[res.sub];
+							this._turn = 0;
+							return this.attack (this._enemy,this._char, skill);
+						}
+						return "do nothing";
+
+					}
+					
+				},
+
+			};
+		}])
+		.factory('selfdata', ["$log", "messagebuffer","leveldata","aidefault","itemdata",function($log, messagebuffer,leveldata,aidefault,itemdata){
+			return {
+				data : {
+					name : "zhanglei",
+					level : 0,
+					hp : 100,
+					hpmax : 100,
+					mp : 100,
+					mpmax : 100,
+					atk : 10,
+					atkbase: 10,
+					def : 0,
+					defbase : 0,
+					ctk : 0, //critical rate
+					ctkbase:0,
+					money : 0,
+					exp : 0,
+					expmax : 100,
+					items : [],
+					equips : [],
+					skills : [{id:0,level:0},{id:1,level:0}],
+				},
+				//{level: 0, hp: 100, mp: 100, atk: 10, def: 0, nextExp : 100},
+				levelUp : function(){
+
+					if(this.data.exp < this.data.expmax)
+						return ;
+					messagebuffer.add({status:0, desc: 'level up'});
+					var obj = leveldata.getLevelData(this.data.level+1)
+					this.data.level ++;
+					this.data.hp = this.data.hpmax = obj.hp;
+					this.data.mp = this.data.mpmax = obj.mp;
+					this.data.expmax = obj.nextExp;
+					this.data.exp = 0;
+					this.data.atkbase = obj.atk;
+					this.data.defbase = obj.def;
+				},
+				earnExp : function(value){
+					this.levelUp();
+				},
+				wake : function(){
+					messagebuffer.add({status:0, desc:"wakeup"});
+					this.data.hp = this.data.hpmax;
+				},
+				scanitem : function(){
+					for (var i=0; i<this.data.items.length; ++i){
+						var item = this.data.items[i];
+						for (var j=0; j<this.data.equips.length; ++j){
+							var equip = this.data.equips[j];
+							if (itemdata.compare(item,equip)){
+								this.changeEquip(i, j);
+							}
+						}
+					}
+				},
+				loot : function(item){
+					this.data.items.add(item);
+					this.scanitem();
+				},
+				calculate : function(){
+					this.levelUp();
+					this.scanitem();
+					var equipatk=0;
+					var equipdef=0;
+					for (var i=0; i< this.data.equips.length; ++i){
+						equipatk += this.data.equips[i].atk;
+						equipdef += this.data.equips[i].def;
+					}
+					this.data.atk = this.data.atkbase + equipatk;
+					this.data.def = this.data.defbase + equipdef;
+				},
+				changeEquip : function(index, itemindex){
+					var equip = this.data.equips[index];
+					this.data.equips[index] = this.data.items[itemindex];
+					tshi.data.items[itemindex] = equip;
+					messagebuffer.add({status:0, desc:"change equip "+ this.data.equips[index].name});
+				},
+				ai : aidefault.ai,
+
+			};
+		}])
+		.factory("tools",["$log", function($log){
+			return {
+				random : function(val){
+					return parseInt(Math.random() * val);
+				},
+				checkRandom100 : function (val){
+					if (this.random(100) <= val)
+						return true;
+					return false;
+				},
+				getRandomListResult : function(list){
+					var sum = 0;
+					for (var i=0; i<list.length; ++i){
+						sum += list[i];
+					}
+					
+					var value = this.getRandom(sum);
+					sum = 0;
+					for (var i=0; i<list.length; ++i){
+						sum += list[i];
+						if (value < sum)
+							return i;
+					}
+					return -1;
+				}
+			}
+		}])
+		.factory("messagebuffer",["$log", function($log){
+			return {
+				arr : [],
+				next: function(){
+					return this.arr.shift();
+				},
+				add: function(msg){
+					return this.arr.push(msg);
+				},
+				getLength : function(){
+					return this.arr.length;
+				}
+			};
+		}])
+		;
+		</script>
+	</head>
+	<body ng-controller="uicontroller">
+		<!-- <button ng-click="cc()">dfsf</button> -->
+		<button ng-click="start()">start</button>
+		<button ng-click="stop()">stop</button><br/>
+		level:{{slevel}}&nbsp;hp:{{shp}}/{{smhp}}&nbsp;exp:{{sexp}}/{{smexp}}
+		<br/>{{ehp}}<br/>
+		<div ng-bind-html="content"></div>
+		
+	</body>
+</html>

@@ -1,0 +1,103 @@
+@mainwidth: 1024px;
+@mainheight: 100px;
+@maincontentpadding: 20px;
+@maincontentwidth: 640px;
+
+@bannerwidth: @mainwidth;
+
+@widgetoutpadding: 15px;
+@widgetoutwidth: 310px;
+@widgetinmargin: 20px;
+@widgetinpadding: 1px;
+@widgetinwidth: 280px;
+@widgetinbg: #DDDDDD;
+@widgettitlepadding: 10px;
+@widgettitlebg: #EEEEEE;
+@widgettextpadding: @widgettitlepadding;
+@widgettextbg: #FCFCFC;
+
+@extrabuffer: 5px;
+
+//Rules for viewing at wider than 800px
+#banner {
+   margin-left: auto;
+   margin-right: auto;
+   width: @bannerwidth;
+}
+
+#banner img { 
+   max-width: @mainwidth; 
+   max-height: @mainheight; 
+}
+
+#main {
+  margin-left: auto;
+  margin-right: auto;
+  width: @mainwidth;
+}    
+
+#main-content {
+  width: @maincontentwidth;
+  padding: @maincontentpadding;
+  float: left;
+}  
+
+#widget-container {
+  padding: @widgetoutpadding;
+  width: @widgetoutwidth; 
+  float: right;
+}
+
+.widget-content {
+   margin: @widgetinmargin; 
+   padding: @widgetinpadding;
+   width: @widgetinwidth;
+   background-color: @widgetinbg; 
+}    
+
+.widget-title {
+   font-weight: bold;
+   padding: @widgettitlepadding;
+   background-color: @widgettitlebg;
+}    
+
+.widget-text {
+   padding: @widgettextpadding;
+   background-color: @widgettextbg;
+}    
+
+.media-body (@scale: 0.75) {
+  #banner { width: (@bannerwidth * @scale); }
+  #banner img {
+    max-width: (@bannerwidth * @scale);
+    max-height: (@mainheight * @scale);
+  }
+  #main { width: (@mainwidth * @scale - @extrabuffer); }
+  #main-content {
+    width: (@maincontentwidth * @scale * 0.75 - @extrabuffer);
+    float: left;
+  }
+  #widget-container {
+    width: (@widgetoutwidth * @scale * 0.75 - @extrabuffer);
+    float: right;
+  }
+  .widget-content {
+    width: (@widgetinwidth * @scale * 0.75 - @extrabuffer);
+  }
+}
+
+//Rules for viewing from 401px to 800px
+@media (min-width: 401px) and (max-width: 800px) {
+  .media-body;
+}
+
+//Rules for viewing smaller than 400px
+@media (max-width: 400px)  {
+  .media-body(0.3);
+  //Extra manipulation of some rules
+  #main-content { padding: 0px; }
+  #widget-container { width: padding: 0px; }
+  .widget-content { margin: 5px; }
+  .widget-text { display: none; } 
+}
+
