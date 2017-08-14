@@ -40,8 +40,9 @@ public class CommonUtil {
 		Properties p = new Properties();
 
 		p.load(res.getInputStream());
-		if (!p.getProperty(key).trim().isEmpty())
+		if (p.getProperty(key).trim()!=null) {
 			value = p.getProperty(key);
+		}
 		return value;
 	}
 

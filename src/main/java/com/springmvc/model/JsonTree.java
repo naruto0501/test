@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
-
 /**
  * 
  * <p>金航数码科技有限责任公司</p>
