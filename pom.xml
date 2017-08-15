@@ -1,9 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.lyk</groupId>
-  <artifactId>Test</artifactId>
-  <version>0.0.1-SNAPSHOT</version>	
-  <name>springmvc Maven Webapp</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.lyk</groupId>
+    <artifactId>Test</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>springmvc Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <properties>
         <!-- spring版本号 -->
@@ -22,14 +24,14 @@
         <commons-io-version>2.0.1</commons-io-version>
     </properties>
     <dependencies>
-     	<!-- servlet start -->
+        <!-- servlet start -->
         <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
         <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>3.0.1</version>
-        <scope>provided</scope>
-    </dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- servlet end -->
         <!-- spring核心包 -->
@@ -39,62 +41,62 @@
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
         </dependency>
- 
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <!-- springframe end -->
- 
+
         <!-- mybatis核心包 -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -126,72 +128,72 @@
             <artifactId>druid</artifactId>
             <version>1.0.2</version>
         </dependency>
- 
+
         <!-- json数据 -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>1.9.13</version>
         </dependency>
         <dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<version>2.4.1</version>
-			</dependency>
-			
-		<!-- jsoup -->
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.6.3</version>
-		</dependency>
-		<!-- shiro start -->	
-		<dependency>  
-	        <groupId>org.apache.shiro</groupId>  
-	        <artifactId>shiro-core</artifactId>  
-	        <version>${shiro.version}</version>  
-	    </dependency>
-	    <dependency>
-	        <groupId>org.apache.shiro</groupId>
-	        <artifactId>shiro-ehcache</artifactId>
-	        <version>${shiro.version}</version>
-	    </dependency>
-	    <dependency>
-	        <groupId>org.apache.shiro</groupId>
-	        <artifactId>shiro-web</artifactId>
-	        <version>${shiro.version}</version>
-	    </dependency>
-	    <dependency>
-	        <groupId>org.apache.shiro</groupId>
-	        <artifactId>shiro-spring</artifactId>
-	        <version>${shiro.version}</version>
-	    </dependency>
-	    <!-- shiro end -->	
-		<!-- activiti工作流  start -->
-		<dependency>
-		    <groupId>org.activiti</groupId>
-		    <artifactId>activiti-engine</artifactId>
-		    <version>${activiti.version}</version>
-		</dependency>
-		 
-		<dependency>
-		    <groupId>org.activiti</groupId>
-		    <artifactId>activiti-bpmn-layout</artifactId>
-		    <version>${activiti.version}</version>
-		</dependency>
-		 
-		<dependency>
-		    <groupId>org.activiti</groupId>
-		    <artifactId>activiti-spring</artifactId>
-		    <version>${activiti.version}</version>
-		</dependency> 
-		<!-- activiti工作流       end -->
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+
+        <!-- jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+        <!-- shiro start -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <!-- shiro end -->
+        <!-- activiti工作流  start -->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-engine</artifactId>
+            <version>${activiti.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-bpmn-layout</artifactId>
+            <version>${activiti.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring</artifactId>
+            <version>${activiti.version}</version>
+        </dependency>
+        <!-- activiti工作流       end -->
         <!-- 日志文件管理包 -->
         <!-- log start -->
         <dependency>
@@ -212,69 +214,69 @@
         <!-- log end -->
         <!-- redis start -->
         <dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>${redis.version}</version>
-		</dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
         <!-- redis end -->
         <!-- upload start -->
         <dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>${commons-fileupload-version}</version>
-		</dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons-fileupload-version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io-version}</version>
-		</dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io-version}</version>
+        </dependency>
         <!-- upload end -->
-        
+
         <!-- jstl start -->
-        <dependency>  
-           <groupId>jstl</groupId>  
-           <artifactId>jstl</artifactId>  
-           <version>1.2</version>  
-       </dependency>  
-         
-       <dependency>  
-           <groupId>taglibs</groupId>  
-           <artifactId>standard</artifactId>  
-           <version>1.1.2</version>  
-       </dependency>  
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
         <!-- jstl end -->
     </dependencies>
     <build>
         <finalName>springmvc</finalName>
-        <pluginManagement>  
-            <plugins>  
-                <plugin>  
-                    <groupId>org.eclipse.m2e</groupId>  
-                    <artifactId>lifecycle-mapping</artifactId>  
-                    <version>1.0.0</version>  
-                    <configuration>  
-                        <lifecycleMappingMetadata>  
-                            <pluginExecutions>  
-                                <pluginExecution>  
-                                    <pluginExecutionFilter>  
-                                        <groupId>org.apache.maven.plugins</groupId>  
-                                        <artifactId>maven-dependency-plugin</artifactId>  
-                                        <versionRange>[2.0,)</versionRange>  
-                                        <goals>  
-                                            <goal>copy-dependencies</goal>  
-                                        </goals>  
-                                    </pluginExecutionFilter>  
-                                    <action>  
-                                        <ignore />  
-                                    </action>  
-                                </pluginExecution>  
-                            </pluginExecutions>  
-                        </lifecycleMappingMetadata>  
-                    </configuration>  
-                </plugin>  
-            </plugins>  
-        </pluginManagement>  
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-dependency-plugin</artifactId>
+                                        <versionRange>[2.0,)</versionRange>
+                                        <goals>
+                                            <goal>copy-dependencies</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore/>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
