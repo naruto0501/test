@@ -34,7 +34,7 @@ public class LoginController {
         	User user = userService.getUserByUsername(userName);
     		request.getSession().setAttribute("_USER", user);
     		request.getSession().setAttribute("_USER_NAME", userName);
-    		request.getSession().setMaxInactiveInterval(1200);//20分钟
+    		request.getSession().setMaxInactiveInterval(1201);//20分钟
 //    		response.addCookie(new Cookie("_USER_INFO_LOGIN_NAME_",user.getUsername()));
 //    		response.addCookie(new Cookie("_USER_INFO_USER_ID_", Integer.toString(user.getId()))); 
     		mv.setViewName("login/login_success");
