@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.storagemodel.dao.dbExecutorDao" >
+
+
+ 
+  
+  <insert id="createTable"  >
+  			CREATE TABLE ${tableName}
+  			<trim prefix="(" suffix=")" >
+  			<foreach item="item"  index="key" collection="columns"    open=""   separator="" close="">
+  					${key}   ${item},
+            </foreach>
+            PRIMARY KEY (${pkey})
+            </trim>
+  </insert>
+  
+
+    <select id="tableIsExist"  resultType="Integer">
+  		${sql}
+  </select>
+ 
+    <insert id="addColumn"  >
+  			ALTER TABLE  ${tableName}  ADD  ${colName}   ${colType}  ${colNullable}
+  </insert>
+  
+     <update id="alterColumnName"  >
+  			ALTER TABLE ${tableName}  RENAME COLUMN 	 ${oldColName}  TO  ${colName} 
+  </update>
+  
+  <update id="alterColumnType"  parameterType="map" databaseId="oracle">
+  			ALTER TABLE ${tableName}  MODIFY 	 ${colName}   ${colType}
+  </update>
+	<update id="alterColumnType"  parameterType="map" databaseId="informix">
+		ALTER TABLE ${tableName}  MODIFY 	 ${colName}   ${colType}
+	</update>
+  <update id="alterColumnType"  parameterType="map" databaseId="sqlserver">
+  			ALTER TABLE ${tableName}  ALTER COLUMN 	 ${colName}   ${colType}
+  </update>
+  <update id="alterColumnType"  parameterType="map" databaseId="mysql">
+  			ALTER TABLE ${tableName}  MODIFY COLUMN 	 ${colName}   ${colType}
+  </update>
+
+    <delete id="deleteColumnComment"  parameterType="map" databaseId="sqlserver">
+      IF exists(SELECT 1 FROM fn_listextendedproperty('MS_Description', 'SCHEMA', 'dbo', 'TABLE', '${tableName}', 'COLUMN', '${colName}') WHERE name = 'MS_Description') EXEC sp_dropextendedproperty 'MS_Description', 'SCHEMA', 'dbo', 'TABLE', '${tableName}', 'COLUMN', '${colName}'
+    </delete>
+
+	<delete id="deleteColumnConstraint" parameterType="map" databaseId="sqlserver">
+		DECLARE @con VARCHAR(50)
+		DECLARE @TB_NAME VARCHAR(50)
+		DECLARE @COL_NAME VARCHAR(50)
+		SET @TB_NAME = '${tableName}'
+		SET @COL_NAME = '${colName}'
+		SET @con=(select name
+						from sysobjects t
+						where id = (select cdefault from syscolumns where id = object_id(@TB_NAME)
+						and name=@COL_NAME))
+		SELECT @con
+		DECLARE @ALTERSQL NVARCHAR(MAX)
+		SET @ALTERSQL=N'ALTER TABLE '+@TB_NAME+' DROP CONSTRAINT '+@con
+		EXEC SP_EXECUTESQL @ALTERSQL
+	</delete>
+	<update id="alterColumnDefault" parameterType="map" databaseId="sqlserver">
+		ALTER TABLE ${tableName} ADD DEFAULT '${colDefault}' FOR ${colName}
+	</update>
+	<update id="alterColumnDefault" parameterType="map" databaseId="oracle">
+  		ALTER TABLE ${tableName} MODIFY ${colName} DEFAULT '${colDefault}'
+  	</update>
+  	<update id="alterDateColumnDefault" parameterType="map" databaseId="oracle">
+  		ALTER TABLE ${tableName} MODIFY ${colName} DEFAULT to_date('${colDefault}','yyyy-mm-dd')
+  	</update>
+	<update id="alterColumnDefault" parameterType="map" databaseId="mysql">
+  		ALTER TABLE ${tableName} ALTER COLUMN ${colName} SET DEFAULT '${colDefault}'
+  	</update>
+  	
+    <update id="alterColumnComment"  parameterType="map" databaseId="oracle">
+      COMMENT ON COLUMN ${tableName}.${colName} IS &apos;${colLabel}&apos;
+    </update>
+	<update id="alterColumnComment"  parameterType="map" databaseId="informix">
+		COMMENT ON COLUMN ${tableName}.${colName} IS &apos;${colLabel}&apos;
+	</update>
+    <update id="alterColumnComment"  parameterType="map" databaseId="sqlserver">
+      EXEC sp_addextendedproperty 'MS_Description', '${colLabel}', 'SCHEMA', 'dbo', 'TABLE', '${tableName}', 'COLUMN', '${colName}'
+    </update>
+    <update id="alterColumnComment"  parameterType="map" databaseId="mysql">
+      ALTER TABLE ${tableName} MODIFY ${colName} ${colTypeLength} COMMENT '${colLabel}'
+    </update>
+
+  <insert id="dropTable"  >
+  		drop table ${tableName}
+  </insert>
+  
+   <delete id="dropColumn"  parameterType="map" >
+  			ALTER TABLE   ${tableName}	 DROP COLUMN   ${colName}
+  </delete>
+
+  <insert id="createIndex"  >
+  			CREATE ${indexType}  INDEX ${indexName}  ON 	 ${tableName}   (${colName}) 
+  </insert>
+  
+  <insert id="dropIndex"  >
+  			DROP INDEX ${indexName}
+  </insert>
+  
+  <select id="selectSql"  resultType="map">
+  		${sql}
+  </select>
+
+</mapper>

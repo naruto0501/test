@@ -12,7 +12,7 @@
      
     <!-- 扫描文件（自动将servicec层注入） -->
     <context:component-scan base-package="com.*"/>
-    
+    <bean id="dataBaseConfig" class="com.core.db.DataBaseConfig"/>
     <import resource="classpath:conf/spring-mybatis.xml"/>
     <import resource="classpath:conf/spring-redis.xml"/>
 </beans>

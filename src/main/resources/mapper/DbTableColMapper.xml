@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="avicit.platform6.db.dbtablecol.dao.DbTableColDao">
+
+<resultMap id="DbTableColDTOMap" type="com.springmvc.storagemodel.dao.DbTableColDao">
+		<result property="id" column="ID" jdbcType="VARCHAR" />
+		<result property="tableId" column="TABLE_ID" jdbcType="VARCHAR" />
+		<result property="colName" column="COL_NAME" jdbcType="VARCHAR" />
+		<result property="colType" column="COL_TYPE" jdbcType="VARCHAR" />
+		<result property="colLength" column="COL_LENGTH" jdbcType="VARCHAR" />
+		<result property="attribute02" column="COL_DECIMAL" jdbcType="VARCHAR" />
+		<result property="colNullable" column="COL_NULLABLE" jdbcType="VARCHAR" />
+		<result property="colDefault" column="COL_DEFAULT" jdbcType="VARCHAR" />
+		<result property="colComments" column="COL_COMMENTS" jdbcType="VARCHAR" />
+		<result property="colIsPk" column="COL_IS_PK" jdbcType="VARCHAR" />
+		<result property="colIsSys" column="COL_IS_SYS" jdbcType="VARCHAR" />
+		<result property="colIsUnique" column="COL_IS_UNIQUE" jdbcType="VARCHAR" />
+		<result property="sysApplicationId" column="SYS_APPLICATION_ID" jdbcType="VARCHAR" />
+		<result property="orgIdentity" column="ORG_IDENTITY" jdbcType="VARCHAR" />
+		<result property="lastUpdateDate" column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="lastUpdatedBy" column="LAST_UPDATED_BY" jdbcType="VARCHAR" />
+		<result property="creationDate" column="CREATION_DATE" jdbcType="TIMESTAMP" />
+		<result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR" />
+		<result property="lastUpdateIp" column="LAST_UPDATE_IP" jdbcType="VARCHAR" />
+		<result property="version" column="VERSION" jdbcType="DECIMAL" />
+</resultMap>
+<!-- 分页查询 DB_TABLE_COL -->
+<select id="searchDbTableColByPage" parameterType="java.util.Map" resultMap="DbTableColDTOMap">
+	select
+		t1.id                             ,
+		t1.table_id                       ,
+		t1.col_name                       ,
+		t1.col_type                       ,
+		t1.col_length                     ,
+		t1.col_nullable                   ,
+		t1.col_default                    ,
+		t1.col_comments                   ,
+		t1.col_is_pk                      ,
+		t1.col_decimal                   ,
+		t1.col_is_unique                  ,
+		t1.sys_application_id             ,
+		t1.org_identity                   ,
+		t1.last_update_date               ,
+		t1.last_updated_by                ,
+		t1.creation_date                  ,
+		t1.created_by                     ,
+		t1.last_update_ip                 ,
+		t1.version                        ,
+		t1.col_is_sys
+	from db_table_col 	t1
+		<where>
+			<if test="bean != null">
+			<if test="bean.id != null and bean.id != ''">
+				and t1.ID =#{bean.id}
+			</if>
+			<if test="bean.tableId != null and bean.tableId != ''">
+				and t1.TABLE_ID like concat(concat('%',#{bean.tableId}),'%') 
+			</if>
+			<if test="bean.colName != null and bean.colName != ''">
+				and t1.COL_NAME like concat(concat('%',#{bean.colName}),'%') 
+			</if>
+			<if test="bean.colType != null and bean.colType != ''">
+				and t1.COL_TYPE like concat(concat('%',#{bean.colType}),'%') 
+			</if>
+			<if test="bean.colLength != null and bean.colLength != ''">
+				and t1.COL_LENGTH like concat(concat('%',#{bean.colLength}),'%') 
+			</if>
+			<if test="bean.colNullable != null and bean.colNullable != ''">
+				and t1.COL_NULLABLE like concat(concat('%',#{bean.colNullable}),'%') 
+			</if>
+			<if test="bean.colDefault != null and bean.colDefault != ''">
+				and t1.COL_DEFAULT like concat(concat('%',#{bean.colDefault}),'%') 
+			</if>
+			<if test="bean.colComments != null and bean.colComments != ''">
+				and t1.COL_COMMENTS like concat(concat('%',#{bean.colComments}),'%') 
+			</if>
+			<if test="bean.colIsPk != null and bean.colIsPk != ''">
+				and t1.COL_IS_PK like concat(concat('%',#{bean.colIsPk}),'%') 
+			</if>
+			<if test="bean.colIsUnique != null and bean.colIsUnique != ''">
+				and t1.COL_IS_UNIQUE like concat(concat('%',#{bean.colIsUnique}),'%') 
+			</if>
+			<if test="bean.sysApplicationId != null and bean.sysApplicationId != ''">
+				and t1.SYS_APPLICATION_ID like concat(concat('%',#{bean.sysApplicationId}),'%') 
+			</if>
+			<if test="bean.orgIdentity != null and bean.orgIdentity != ''">
+				and t1.ORG_IDENTITY like concat(concat('%',#{bean.orgIdentity}),'%') 
+			</if>
+			<if test="bean.lastUpdateDate != null and bean.lastUpdateDate != ''">
+				and t1.LAST_UPDATE_DATE like concat(concat('%',#{bean.lastUpdateDate}),'%') 
+			</if>
+			<if test="bean.lastUpdatedBy != null and bean.lastUpdatedBy != ''">
+				and t1.LAST_UPDATED_BY like concat(concat('%',#{bean.lastUpdatedBy}),'%') 
+			</if>
+			<if test="bean.creationDate != null and bean.creationDate != ''">
+				and t1.CREATION_DATE like concat(concat('%',#{bean.creationDate}),'%') 
+			</if>
+			<if test="bean.createdBy != null and bean.createdBy != ''">
+				and t1.CREATED_BY like concat(concat('%',#{bean.createdBy}),'%') 
+			</if>
+			<if test="bean.lastUpdateIp != null and bean.lastUpdateIp != ''">
+				and t1.LAST_UPDATE_IP like concat(concat('%',#{bean.lastUpdateIp}),'%') 
+			</if>
+			<if test="bean.version != null and bean.version != ''">
+				and t1.VERSION like concat(concat('%',#{bean.version}),'%') 
+			</if>
+			<if test="bean.colIsSys != null and bean.colIsSys != ''">
+				and t1.COL_IS_SYS like concat(concat('%',#{bean.colIsSys}),'%') 
+			</if>
+			</if>
+			
+		</where>
+		<choose>
+			<when test="P_OrderBy != null and P_OrderBy != ''">
+				order by ${P_OrderBy}			
+			</when>
+			<otherwise>
+				order by t1.col_is_sys desc,t1.creation_date desc
+			</otherwise>
+		</choose>
+</select>
+<!-- 分页查询 DB_TABLE_COL 非索引列-->
+<select id="searchDbTableNotIndexColByPage" parameterType="java.util.Map" resultMap="DbTableColDTOMap">
+	select t1.*
+	from db_table_col 	t1
+	where
+		t1.table_id=#{bean.tableId}			
+		and (t1.COL_IS_SYS ='N' or t1.COL_IS_SYS is null)
+		and t1.COL_NAME not IN(select INDEX_COL from DB_TABLE_INDEX)
+</select>
+<!-- 分页查询 OrDB_TABLE_COL -->
+<select id="searchDbTableColByPageOr" parameterType="java.util.Map" resultMap="DbTableColDTOMap">
+	select
+		t1.id                             ,
+		t1.table_id                       ,
+		t1.col_name                       ,
+		t1.col_type                       ,
+		t1.col_length                     ,
+		t1.col_nullable                   ,
+		t1.col_default                    ,
+		t1.col_comments                   ,
+		t1.col_is_pk                      ,
+		t1.col_is_unique                  ,
+		t1.sys_application_id             ,
+		t1.org_identity                   ,
+		t1.last_update_date               ,
+		t1.last_updated_by                ,
+		t1.creation_date                  ,
+		t1.created_by                     ,
+		t1.col_decimal                   ,
+		t1.last_update_ip                 ,
+		t1.version                        ,
+		t1.col_is_sys
+	from db_table_col 	t1
+		<where>
+			<if test="bean != null">
+			<if test="bean.id != null and bean.id != ''">
+				or t1.ID =#{bean.id}
+			</if>
+			<if test="bean.tableId != null and bean.tableId != ''">
+				or t1.TABLE_ID like concat(concat('%',#{bean.tableId}),'%')  
+			</if>
+			<if test="bean.colName != null and bean.colName != ''">
+				or t1.COL_NAME like concat(concat('%',#{bean.colName}),'%')  
+			</if>
+			<if test="bean.colType != null and bean.colType != ''">
+				or t1.COL_TYPE like concat(concat('%',#{bean.colType}),'%')  
+			</if>
+			<if test="bean.colLength != null and bean.colLength != ''">
+				or t1.COL_LENGTH like concat(concat('%',#{bean.colLength}),'%')  
+			</if>
+			<if test="bean.colNullable != null and bean.colNullable != ''">
+				or t1.COL_NULLABLE like concat(concat('%',#{bean.colNullable}),'%')  
+			</if>
+			<if test="bean.colDefault != null and bean.colDefault != ''">
+				or t1.COL_DEFAULT like concat(concat('%',#{bean.colDefault}),'%')  
+			</if>
+			<if test="bean.colComments != null and bean.colComments != ''">
+				or t1.COL_COMMENTS like concat(concat('%',#{bean.colComments}),'%')  
+			</if>
+			<if test="bean.colIsPk != null and bean.colIsPk != ''">
+				or t1.COL_IS_PK like concat(concat('%',#{bean.colIsPk}),'%')  
+			</if>
+			<if test="bean.colIsUnique != null and bean.colIsUnique != ''">
+				or t1.COL_IS_UNIQUE like concat(concat('%',#{bean.colIsUnique}),'%')  
+			</if>
+			<if test="bean.sysApplicationId != null and bean.sysApplicationId != ''">
+				or t1.SYS_APPLICATION_ID like concat(concat('%',#{bean.sysApplicationId}),'%')  
+			</if>
+			<if test="bean.orgIdentity != null and bean.orgIdentity != ''">
+				or t1.ORG_IDENTITY like concat(concat('%',#{bean.orgIdentity}),'%')  
+			</if>
+			<if test="bean.lastUpdateDate != null and bean.lastUpdateDate != ''">
+				or t1.LAST_UPDATE_DATE like concat(concat('%',#{bean.lastUpdateDate}),'%')  
+			</if>
+			<if test="bean.lastUpdatedBy != null and bean.lastUpdatedBy != ''">
+				or t1.LAST_UPDATED_BY like concat(concat('%',#{bean.lastUpdatedBy}),'%')  
+			</if>
+			<if test="bean.creationDate != null and bean.creationDate != ''">
+				or t1.CREATION_DATE like concat(concat('%',#{bean.creationDate}),'%')  
+			</if>
+			<if test="bean.createdBy != null and bean.createdBy != ''">
+				or t1.CREATED_BY like concat(concat('%',#{bean.createdBy}),'%')  
+			</if>
+			<if test="bean.lastUpdateIp != null and bean.lastUpdateIp != ''">
+				or t1.LAST_UPDATE_IP like concat(concat('%',#{bean.lastUpdateIp}),'%')  
+			</if>
+			<if test="bean.version != null and bean.version != ''">
+				or t1.VERSION like concat(concat('%',#{bean.version}),'%')  
+			</if>
+			<if test="bean.colIsSys != null and bean.colIsSys != ''">
+				or t1.COL_IS_SYS =#{bean.colIsSys}
+			</if>
+			</if>
+			
+		</where>
+		<choose>
+			<when test="P_OrderBy != null and P_OrderBy != ''">
+				order by ${P_OrderBy}			
+			</when>
+			<otherwise>
+				order by t1.creation_date desc
+			</otherwise>
+		</choose>
+</select>
+<!-- 查询列表 DB_TABLE_COL -->
+<select id="searchDbTableCol" parameterType="java.util.Map" resultMap="DbTableColDTOMap">
+	select
+		t1.id                             ,
+		t1.table_id                       ,
+		t1.col_name                       ,
+		t1.col_type                       ,
+		t1.col_length                     ,
+		t1.col_nullable                   ,
+		t1.col_default                    ,
+		t1.col_comments                   ,
+		t1.col_is_pk                      ,
+		t1.col_is_unique                  ,
+		t1.sys_application_id             ,
+		t1.org_identity                   ,
+		t1.col_decimal                   ,
+		t1.last_update_date               ,
+		t1.last_updated_by                ,
+		t1.creation_date                  ,
+		t1.created_by                     ,
+		t1.last_update_ip                 ,
+		t1.version                        ,
+		t1.col_is_sys
+	from db_table_col 	t1
+		<where>
+			<if test="id != null and id != ''">
+				and t1.ID =#{id}
+			</if>
+			<if test="tableId != null and tableId != ''">
+				and t1.TABLE_ID =#{tableId}
+			</if>
+			<if test="colName != null and colName != ''">
+				and t1.COL_NAME =#{colName}
+			</if>
+			<if test="colType != null and colType != ''">
+				and t1.COL_TYPE =#{colType}
+			</if>
+			<if test="colLength != null and colLength != ''">
+				and t1.COL_LENGTH =#{colLength}
+			</if>
+			<if test="colNullable != null and colNullable != ''">
+				and t1.COL_NULLABLE =#{colNullable}
+			</if>
+			<if test="colDefault != null and colDefault != ''">
+				and t1.COL_DEFAULT =#{colDefault}
+			</if>
+			<if test="colComments != null and colComments != ''">
+				and t1.COL_COMMENTS =#{colComments}
+			</if>
+			<if test="colIsPk != null and colIsPk != ''">
+				and t1.COL_IS_PK =#{colIsPk}
+			</if>
+			<if test="colIsUnique != null and colIsUnique != ''">
+				and t1.COL_IS_UNIQUE =#{colIsUnique}
+			</if>
+			<if test="sysApplicationId != null and sysApplicationId != ''">
+				and t1.SYS_APPLICATION_ID =#{sysApplicationId}
+			</if>
+			<if test="orgIdentity != null and orgIdentity != ''">
+				and t1.ORG_IDENTITY =#{orgIdentity}
+			</if>
+			<if test="lastUpdateDate != null and lastUpdateDate != ''">
+				and t1.LAST_UPDATE_DATE =#{lastUpdateDate}
+			</if>
+			<if test="lastUpdatedBy != null and lastUpdatedBy != ''">
+				and t1.LAST_UPDATED_BY =#{lastUpdatedBy}
+			</if>
+			<if test="creationDate != null and creationDate != ''">
+				and t1.CREATION_DATE =#{creationDate}
+			</if>
+			<if test="createdBy != null and createdBy != ''">
+				and t1.CREATED_BY =#{createdBy}
+			</if>
+			<if test="lastUpdateIp != null and lastUpdateIp != ''">
+				and t1.LAST_UPDATE_IP =#{lastUpdateIp}
+			</if>
+			<if test="version != null and version != ''">
+				and t1.VERSION =#{version}
+			</if>
+			<if test="colIsSys != null and colIsSys != ''">
+				and t1.COL_IS_SYS =#{colIsSys}
+			</if>
+		</where>
+</select>
+<!-- 主键查询对象 DB_TABLE_COL -->
+<select id="findDbTableColById" parameterType="java.util.Map" resultMap="DbTableColDTOMap">
+	select
+		t1.id                             ,
+		t1.table_id                       ,
+		t1.col_name                       ,
+		t1.col_type                       ,
+		t1.col_length                     ,
+		t1.col_nullable                   ,
+		t1.col_default                    ,
+		t1.col_comments                   ,
+		t1.col_is_pk                      ,
+		t1.col_is_unique                  ,
+		t1.col_decimal                   ,
+		t1.sys_application_id             ,
+		t1.org_identity                   ,
+		t1.last_update_date               ,
+		t1.last_updated_by                ,
+		t1.creation_date                  ,
+		t1.created_by                     ,
+		t1.last_update_ip                 ,
+		t1.version                         ,
+		t1.col_is_sys
+	from db_table_col 	t1
+		where t1.id = #{id}
+</select>
+<!-- 主键查询对象 DB_TABLE_COL -->
+<select id="findDbTableColListByTableId" parameterType="java.util.Map" resultMap="DbTableColDTOMap">
+	select
+		t1.id                             ,
+		t1.table_id                       ,
+		t1.col_name                       ,
+		t1.col_type                       ,
+		t1.col_length                     ,
+		t1.col_nullable                   ,
+		t1.col_default                    ,
+		t1.col_comments                   ,
+		t1.col_is_pk                      ,
+		t1.col_is_unique                  ,
+		t1.col_decimal                   ,
+		t1.sys_application_id             ,
+		t1.org_identity                   ,
+		t1.last_update_date               ,
+		t1.last_updated_by                ,
+		t1.creation_date                  ,
+		t1.created_by                     ,
+		t1.last_update_ip                 ,
+		t1.version                        ,
+		t1.col_is_sys
+	from db_table_col 	t1
+		where t1.table_id = #{id}
+</select>
+
+<!-- 主键查询对象 DB_TABLE_COL -->
+<select id="findDbTableColListByTableName" parameterType="java.util.Map" resultMap="DbTableColDTOMap">
+select c.* from db_table d, db_table_col c
+where d.id = c.table_id
+and d.table_name= #{table_name}
+</select>
+
+<!-- 新增对象 DB_TABLE_COL -->
+<insert id="insertDbTableCol" parameterType="avicit.platform6.db.dbtablecol.dto.DbTableColDTO">
+	insert into db_table_col
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="tableId != null">
+				table_id,
+			</if>
+			<if test="colName != null">
+				col_name,
+			</if>
+			<if test="colType != null">
+				col_type,
+			</if>
+			<if test="colLength != null">
+				col_length,
+			</if>
+			<if test="attribute02 != null">
+				col_decimal,
+			</if>
+			<if test="colNullable != null">
+				col_nullable,
+			</if>
+			<if test="colDefault != null">
+				col_default,
+			</if>
+			<if test="colComments != null">
+				col_comments,
+			</if>
+			<if test="colIsPk != null">
+				col_is_pk,
+			</if>
+			<if test="colIsUnique != null">
+				col_is_unique,
+			</if>
+			<if test="sysApplicationId != null">
+				sys_application_id,
+			</if>
+			<if test="orgIdentity != null">
+				org_identity,
+			</if>
+			<if test="lastUpdateDate != null">
+				last_update_date,
+			</if>
+			<if test="lastUpdatedBy != null">
+				last_updated_by,
+			</if>
+			<if test="creationDate != null">
+				creation_date,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+			<if test="lastUpdateIp != null">
+				last_update_ip,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="colIsSys != null">
+				col_is_sys,
+			</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tableId != null">
+				#{tableId,jdbcType=VARCHAR},
+			</if>
+			<if test="colName != null">
+				#{colName,jdbcType=VARCHAR},
+			</if>
+			<if test="colType != null">
+				#{colType,jdbcType=VARCHAR},
+			</if>
+			<if test="colLength != null">
+				#{colLength,jdbcType=VARCHAR},
+			</if>
+			<if test="attribute02 != null">
+				#{attribute02,jdbcType=VARCHAR},
+			</if>
+			<if test="colNullable != null">
+				#{colNullable,jdbcType=VARCHAR},
+			</if>
+			<if test="colDefault != null">
+				#{colDefault,jdbcType=VARCHAR},
+			</if>
+			<if test="colComments != null">
+				#{colComments,jdbcType=VARCHAR},
+			</if>
+			<if test="colIsPk != null">
+				#{colIsPk,jdbcType=VARCHAR},
+			</if>
+			<if test="colIsUnique != null">
+				#{colIsUnique,jdbcType=VARCHAR},
+			</if>
+			<if test="sysApplicationId != null">
+				#{sysApplicationId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgIdentity != null">
+				#{orgIdentity,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateDate != null">
+				#{lastUpdateDate},
+			</if>
+			<if test="lastUpdatedBy != null">
+				#{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateIp != null">
+				#{lastUpdateIp,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=DECIMAL},
+			</if>
+			<if test="colIsSys != null">
+				#{colIsSys,jdbcType=VARCHAR},
+			</if>
+	</trim>
+</insert>
+<!-- 批量新增对象 DB_TABLE_COL -->
+<insert id="insertDbTableColList" parameterType="java.util.List">
+	insert into db_table_col(
+			id,
+			table_id,
+			col_name,
+			col_type,
+			col_length,
+			col_decimal,
+			col_nullable,
+			col_default,
+			col_comments,
+			col_is_pk,
+			col_is_unique,
+			sys_application_id,
+			org_identity,
+			last_update_date,
+			last_updated_by,
+			creation_date,
+			created_by,
+			last_update_ip,
+			version,
+			col_is_sys)
+	<foreach collection="list" item="item" index="index" open="(" separator="union all" close=")">
+		select 
+					#{item.id,jdbcType=VARCHAR},
+					#{item.tableId,jdbcType=VARCHAR},
+					#{item.colName,jdbcType=VARCHAR},
+					#{item.colType,jdbcType=VARCHAR},
+					#{item.colLength,jdbcType=VARCHAR},
+					#{item.attribute02,jdbcType=VARCHAR},
+					#{item.colNullable,jdbcType=VARCHAR},
+					#{item.colDefault,jdbcType=VARCHAR},
+					#{item.colComments,jdbcType=VARCHAR},
+					#{item.colIsPk,jdbcType=VARCHAR},
+					#{item.colIsUnique,jdbcType=VARCHAR},
+					#{item.sysApplicationId,jdbcType=VARCHAR},
+					#{item.orgIdentity,jdbcType=VARCHAR},
+					#{item.lastUpdateDate},
+					#{item.lastUpdatedBy,jdbcType=VARCHAR},
+					#{item.creationDate},
+					#{item.createdBy,jdbcType=VARCHAR},
+					#{item.lastUpdateIp,jdbcType=VARCHAR},
+					#{item.version,jdbcType=DECIMAL},
+					#{item.colIsSys,jdbcType=VARCHAR}
+		from dual 
+	</foreach>
+</insert>
+<!-- 更新对象 DB_TABLE_COL -->
+<update id="updateDbTableColSensitive" parameterType="avicit.platform6.db.dbtablecol.dto.DbTableColDTO">
+	update db_table_col 
+	<set>
+			<if test="id != null">
+				id                             =#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tableId != null">
+				table_id                       =#{tableId,jdbcType=VARCHAR},
+			</if>
+			<if test="colName != null">
+				col_name                       =#{colName,jdbcType=VARCHAR},
+			</if>
+			<if test="colType != null">
+				col_type                       =#{colType,jdbcType=VARCHAR},
+			</if>
+			<if test="colLength != null">
+				col_length                     =#{colLength,jdbcType=VARCHAR},
+			</if>
+			<if test="attribute02 != null">
+				col_decimal                     =#{attribute02,jdbcType=VARCHAR},
+			</if>
+			<if test="colNullable != null">
+				col_nullable                   =#{colNullable,jdbcType=VARCHAR},
+			</if>
+			<if test="colDefault != null">
+				col_default                    =#{colDefault,jdbcType=VARCHAR},
+			</if>
+			<if test="colComments != null">
+				col_comments                   =#{colComments,jdbcType=VARCHAR},
+			</if>
+			<if test="colIsPk != null">
+				col_is_pk                      =#{colIsPk,jdbcType=VARCHAR},
+			</if>
+			<if test="colIsUnique != null">
+				col_is_unique                  =#{colIsUnique,jdbcType=VARCHAR},
+			</if>
+			<if test="sysApplicationId != null">
+				sys_application_id             =#{sysApplicationId,jdbcType=VARCHAR},
+			</if>
+			<if test="orgIdentity != null">
+				org_identity                   =#{orgIdentity,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateDate != null">
+				last_update_date               =#{lastUpdateDate},
+			</if>
+			<if test="lastUpdatedBy != null">
+				last_updated_by                =#{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDate != null">
+				creation_date                  =#{creationDate},
+			</if>
+			<if test="createdBy != null">
+				created_by                     =#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateIp != null">
+				last_update_ip                 =#{lastUpdateIp,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version                        =version+1,
+			</if>
+			<if test="colIsSys != null">
+				col_is_sys                =#{colIsSys,jdbcType=VARCHAR},
+			</if>
+	</set>
+		where id = #{id} and version =#{version}
+</update>
+<!-- 更新对象 DB_TABLE_COL -->
+<update id="updateDbTableColAll" parameterType="avicit.platform6.db.dbtablecol.dto.DbTableColDTO">
+	update db_table_col 
+		set
+			id                             =#{id,jdbcType=VARCHAR},
+			table_id                       =#{tableId,jdbcType=VARCHAR},
+			col_name                       =#{colName,jdbcType=VARCHAR},
+			col_type                       =#{colType,jdbcType=VARCHAR},
+			col_length                     =#{colLength,jdbcType=VARCHAR},
+			col_decimal                     =#{attribute02,jdbcType=VARCHAR},
+			col_nullable                   =#{colNullable,jdbcType=VARCHAR},
+			col_default                    =#{colDefault,jdbcType=VARCHAR},
+			col_comments                   =#{colComments,jdbcType=VARCHAR},
+			col_is_pk                      =#{colIsPk,jdbcType=VARCHAR},
+			col_is_unique                  =#{colIsUnique,jdbcType=VARCHAR},
+			sys_application_id             =#{sysApplicationId,jdbcType=VARCHAR},
+			org_identity                   =#{orgIdentity,jdbcType=VARCHAR},
+			last_update_date               =#{lastUpdateDate},
+			last_updated_by                =#{lastUpdatedBy,jdbcType=VARCHAR},
+			creation_date                  =#{creationDate},
+			created_by                     =#{createdBy,jdbcType=VARCHAR},
+			last_update_ip                 =#{lastUpdateIp,jdbcType=VARCHAR},
+			version                        =version+1,
+			col_is_sys                 =#{colIsSys,jdbcType=VARCHAR},
+	where id = #{id} and version =#{version}
+</update>
+<!-- 批量更新对象   DB_TABLE_COL -->
+<update id="updateDbTableColList" parameterType="java.util.List">
+	<foreach collection="dtoList" item="item" index="index" open="begin" separator="" close="end;">
+	update db_table_col 
+		set
+			id                             =#{item.id,jdbcType=VARCHAR},
+			table_id                       =#{item.tableId,jdbcType=VARCHAR},
+			col_name                       =#{item.colName,jdbcType=VARCHAR},
+			col_type                       =#{item.colType,jdbcType=VARCHAR},
+			col_length                     =#{item.colLength,jdbcType=VARCHAR},
+			col_decimal                     =#{item.attribute02,jdbcType=VARCHAR},
+			col_nullable                   =#{item.colNullable,jdbcType=VARCHAR},
+			col_default                    =#{item.colDefault,jdbcType=VARCHAR},
+			col_comments                   =#{item.colComments,jdbcType=VARCHAR},
+			col_is_pk                      =#{item.colIsPk,jdbcType=VARCHAR},
+			col_is_unique                  =#{item.colIsUnique,jdbcType=VARCHAR},
+			sys_application_id             =#{item.sysApplicationId,jdbcType=VARCHAR},
+			org_identity                   =#{item.orgIdentity,jdbcType=VARCHAR},
+			last_update_date               =#{item.lastUpdateDate},
+			last_updated_by                =#{item.lastUpdatedBy,jdbcType=VARCHAR},
+			creation_date                  =#{item.creationDate},
+			created_by                     =#{item.createdBy,jdbcType=VARCHAR},
+			last_update_ip                 =#{item.lastUpdateIp,jdbcType=VARCHAR},
+			version                        =version+1,
+			col_is_sys                 =#{item.colIsSys,jdbcType=VARCHAR},
+		where id = #{item.id} and version =#{item.version};
+	</foreach>
+</update>
+<!-- 主键删除 DB_TABLE_COL -->
+<delete id="deleteDbTableColById" parameterType="java.lang.String">
+		delete from db_table_col  where  id = #{id}
+</delete>
+
+<!-- 外键删除 DB_TABLE_COL -->
+<delete id="deleteColByTableId" parameterType="java.lang.String">
+		delete from db_table_col  where  table_id = #{tableId}
+</delete>
+<!-- 批量主键删除 DB_TABLE_COL -->
+<delete id="deleteDbTableColList" parameterType="java.util.List">
+		delete from db_table_col  t1
+		<where>
+			<foreach item="idItem" collection="list" open="(" separator="or" close=")">
+				t1.id = #{idItem}
+			</foreach>
+		</where>
+</delete>
+</mapper>

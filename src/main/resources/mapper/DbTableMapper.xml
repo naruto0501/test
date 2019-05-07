@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="avicit.platform6.db.dbtabletype.dao.DbTableDao">
+    <resultMap id="BaseResultMap" type="com.springmvc.storagemodel.dao.DbTableDao">
+       <result property="id" column="ID" jdbcType="VARCHAR" />
+		<result property="tableName" column="TABLE_NAME" jdbcType="VARCHAR" />
+		<result property="tableComments" column="TABLE_COMMENTS" jdbcType="VARCHAR" />
+		<result property="sysApplicationId" column="SYS_APPLICATION_ID" jdbcType="VARCHAR" />
+		<result property="orgIdentity" column="ORG_IDENTITY" jdbcType="VARCHAR" />
+		<result property="tableIsCreated" column="TABLE_IS_CREATED" jdbcType="VARCHAR" />
+		<result property="lastUpdateDate" column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="lastUpdatedBy" column="LAST_UPDATED_BY" jdbcType="VARCHAR" />
+		<result property="creationDate" column="CREATION_DATE" jdbcType="TIMESTAMP" />
+		<result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR" />
+		<result property="lastUpdateIp" column="LAST_UPDATE_IP" jdbcType="VARCHAR" />
+		<result property="version" column="VERSION" jdbcType="DECIMAL" />
+		<result property="tableType" column="TABLE_TYPE" jdbcType="VARCHAR" />
+		<result property="dataSourceId" column="DATASOURCE_ID" jdbcType="VARCHAR" />
+        <result property="dbType" column="DB_TYPE" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    ID, TABLE_NAME, TABLE_COMMENTS, SYS_APPLICATION_ID, ORG_IDENTITY, TABLE_IS_CREATED, TABLE_TYPE, 
+     LAST_UPDATE_DATE, LAST_UPDATED_BY, CREATION_DATE, CREATED_BY, LAST_UPDATE_IP, VERSION,DATASOURCE_ID,DB_TYPE
+  </sql>
+ 
+ 
+ <!--start ws  -->
+  <!--根据表名删除deTable-->
+  <delete id="deleteByTabName" parameterType="java.lang.String" >
+    delete from DB_TABLE
+    where TABLE_NAME = #{tableName,jdbcType=VARCHAR}
+  </delete>
+  <!-- end ws -->
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from DB_TABLE
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from DB_TABLE
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="avicit.platform6.db.dbtabletype.dto.DbTable" >
+    insert into DB_TABLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="tableName != null" >
+        TABLE_NAME,
+      </if>
+      <if test="tableComments != null" >
+        TABLE_COMMENTS,
+      </if>
+      <if test="sysApplicationId != null" >
+        SYS_APPLICATION_ID,
+      </if>
+      <if test="orgIdentity != null" >
+        ORG_IDENTITY,
+      </if>
+      <if test="tableIsCreated != null" >
+        TABLE_IS_CREATED,
+      </if>
+      <if test="tableType != null" >
+        TABLE_TYPE,
+      </if>
+      <if test="lastUpdateDate != null" >
+        LAST_UPDATE_DATE,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        LAST_UPDATED_BY,
+      </if>
+      <if test="creationDate != null" >
+        CREATION_DATE,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="lastUpdateIp != null" >
+        LAST_UPDATE_IP,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+       <if test="dataSourceId != null" >
+        DATASOURCE_ID,
+      </if>
+        <if test="dbType != null" >
+            DB_TYPE,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableComments != null" >
+        #{tableComments,jdbcType=VARCHAR},
+      </if>
+      <if test="sysApplicationId != null" >
+        #{sysApplicationId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIdentity != null" >
+        #{orgIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="tableIsCreated != null" >
+        #{tableIsCreated,jdbcType=VARCHAR},
+      </if>
+      <if test="tableType != null" >
+        #{tableType,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateIp != null" >
+        #{lastUpdateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="dataSourceId != null" >
+        #{dataSourceId,jdbcType=VARCHAR},
+      </if>
+        <if test="dbType != null" >
+            #{dbType,jdbcType=VARCHAR},
+        </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="avicit.platform6.db.dbtabletype.dto.DbTable" >
+    update DB_TABLE
+    <set >
+      <if test="tableName != null and  tableName !=''" >
+        TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableComments != null and tableComments != ''" >
+        TABLE_COMMENTS = #{tableComments,jdbcType=VARCHAR},
+      </if>
+      <if test="sysApplicationId != null and sysApplicationId!=''" >
+        SYS_APPLICATION_ID = #{sysApplicationId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIdentity != null and orgIdentity!=''" >
+        ORG_IDENTITY = #{orgIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="tableIsCreated != null and tableIsCreated!=''" >
+        TABLE_IS_CREATED = #{tableIsCreated,jdbcType=VARCHAR},
+      </if>
+      <if test="tableType != null and tableType!=''" >
+        TABLE_TYPE = #{tableType,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null and lastUpdateDate!=''" >
+        LAST_UPDATE_DATE = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null and lastUpdatedBy!=''" >
+        LAST_UPDATED_BY = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null and creationDate != ''" >
+        CREATION_DATE = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null and createdBy != ''" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateIp != null and lastUpdateIp != ''" >
+        LAST_UPDATE_IP = #{lastUpdateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null and version !=''" >
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="dataSourceId != null and dataSourceId !=''" >
+        DATASOURCE_ID = #{dataSourceId,jdbcType=VARCHAR},
+      </if>
+        <if test="dbType != null and dbType !=''" >
+            DB_TYPE = #{dbType,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="selectTableByName" resultType="avicit.platform6.db.dbtabletype.dto.DbTable">
+  	select * from DB_TABLE where TABLE_NAME = #{tableName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectTableByNameAndDataSourceId" resultType="avicit.platform6.db.dbtabletype.dto.DbTable">
+  	select * from DB_TABLE where TABLE_NAME = #{tableName,jdbcType=VARCHAR} and DATASOURCE_ID = #{dataSourceId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectList"  parameterType="avicit.platform6.db.dbtabletype.dto.DbTable"  resultMap="BaseResultMap" >
+  	select * from DB_TABLE
+  	<where>
+  	 <if test="id != null" >
+        ID = #{id,jdbcType=VARCHAR}
+      </if>
+  	  <if test="tableName != null" >
+        and TABLE_NAME = #{tableName,jdbcType=VARCHAR}
+      </if>
+      <if test="tableComments != null" >
+        and TABLE_COMMENTS = #{tableComments,jdbcType=VARCHAR}
+      </if>
+      <if test="sysApplicationId != null" >
+        and SYS_APPLICATION_ID = #{sysApplicationId,jdbcType=VARCHAR}
+      </if>
+      <if test="orgIdentity != null" >
+        and ORG_IDENTITY = #{orgIdentity,jdbcType=VARCHAR}
+      </if>
+      <if test="tableIsCreated != null" >
+        and TABLE_IS_CREATED = #{tableIsCreated,jdbcType=VARCHAR}
+      </if>
+      <if test="tableType != null" >
+        and TABLE_TYPE = #{tableType,jdbcType=VARCHAR}
+      </if>
+      <if test="lastUpdateDate != null" >
+        and LAST_UPDATE_DATE = #{lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastUpdatedBy != null" >
+        and LAST_UPDATED_BY = #{lastUpdatedBy,jdbcType=VARCHAR}
+      </if>
+      <if test="creationDate != null" >
+        and CREATION_DATE = #{creationDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createdBy != null" >
+        and CREATED_BY = #{createdBy,jdbcType=VARCHAR}
+      </if>
+      <if test="lastUpdateIp != null" >
+        and LAST_UPDATE_IP = #{lastUpdateIp,jdbcType=VARCHAR}
+      </if>
+      <if test="version != null" >
+        and VERSION = #{version,jdbcType=DECIMAL}
+      </if>
+      <if test="dataSourceId != null" >
+        and DATASOURCE_ID = #{dataSourceId,jdbcType=VARCHAR}
+      </if>
+        <if test="dbType != null" >
+            and DB_TYPE = #{dbType,jdbcType=VARCHAR}
+        </if>
+  	</where>
+  	
+  	order by CREATION_DATE
+  </select>
+
+  <select id="searchDbTableList"  parameterType="java.lang.String"  resultMap="BaseResultMap" >
+  	select * from DB_TABLE
+  	<where>
+        <if test="searchParm != null">
+            AND (TABLE_NAME like '%'||#{searchParm,jdbcType=VARCHAR}||'%' OR TABLE_COMMENTS like '%'||#{searchParm,jdbcType=VARCHAR}||'%')
+        </if>
+  	</where>
+  	order by CREATION_DATE
+  </select>
+  
+  <select id="searchDbTableByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+	 select
+        <include refid="Base_Column_List"/>
+        from DB_TABLE
+        <where>
+			<if test="bean != null">
+			<if test="bean.tableType != null and bean.tableType !=''">
+                AND TABLE_TYPE = #{bean.tableType,jdbcType=VARCHAR}
+            </if>
+            <if test="bean.tableName != null and bean.tableName != ''">
+                AND TABLE_NAME like concat(concat('%',#{bean.tableName}),'%') 
+            </if>
+            <if test="bean.tableComments != null and bean.tableComments != ''">
+                AND TABLE_COMMENTS like concat(concat('%',#{bean.tableComments}),'%') 
+            </if>
+            <if test="bean.sysApplicationId != null" >
+		        and SYS_APPLICATION_ID = #{bean.sysApplicationId,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.orgIdentity != null" >
+		        and ORG_IDENTITY = #{bean.orgIdentity,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.tableIsCreated != null and bean.tableIsCreated != ''" >
+		        and TABLE_IS_CREATED = #{bean.tableIsCreated,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.lastUpdateDate != null" >
+		        and LAST_UPDATE_DATE = #{bean.lastUpdateDate,jdbcType=TIMESTAMP}
+		      </if>
+		      <if test="bean.lastUpdatedBy != null" >
+		        and LAST_UPDATED_BY = #{bean.lastUpdatedBy,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.creationDate != null" >
+		        and CREATION_DATE = #{bean.creationDate,jdbcType=TIMESTAMP}
+		      </if>
+		      <if test="bean.createdBy != null" >
+		        and CREATED_BY = #{bean.createdBy,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.lastUpdateIp != null" >
+		        and LAST_UPDATE_IP = #{bean.lastUpdateIp,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.version != null" >
+		        and VERSION = #{bean.version,jdbcType=DECIMAL}
+		      </if>
+		      <if test="bean.dataSourceId != null" >
+		        and DATASOURCE_ID = #{bean.dataSourceId,jdbcType=VARCHAR}
+		      </if>
+                <if test="bean.dbType != null" >
+                    and DB_TYPE = #{bean.dbType,jdbcType=VARCHAR}
+                </if>
+			</if>
+			<if test="sfnConditions != null and sfnConditions.sql != ''">
+				and ${sfnConditions.sql}			
+			</if>
+		</where>
+		<choose>
+	        <when test="P_OrderBy !=null and P_OrderBy != ''">
+	            order by ${P_OrderBy}
+	        </when>
+	        <otherwise>
+	            order by creation_date desc
+	        </otherwise>
+    	</choose>
+</select>
+<!-- 分页查询 DEMO_SINGLE -->
+<select id="searchDbTableByPageOr" parameterType="java.util.Map" resultMap="BaseResultMap">
+	select
+        <include refid="Base_Column_List"/>
+        from DB_TABLE
+        <where>
+			<if test="bean != null">
+			<trim prefix="(" suffix=")"  prefixOverrides="and | or" >
+            <if test="bean.tableName != null">
+                TABLE_NAME like concat(concat('%',#{bean.tableName}),'%') 
+            </if>
+            <if test="bean.tableComments != null">
+                or TABLE_COMMENTS like concat(concat('%',#{bean.tableComments}),'%') 
+            </if>
+            <if test="bean.sysApplicationId != null" >
+		        and SYS_APPLICATION_ID = #{bean.sysApplicationId,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.orgIdentity != null" >
+		        and ORG_IDENTITY = #{bean.orgIdentity,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.tableIsCreated != null" >
+		        and TABLE_IS_CREATED = #{bean.tableIsCreated,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.lastUpdateDate != null" >
+		        and LAST_UPDATE_DATE = #{bean.lastUpdateDate,jdbcType=TIMESTAMP}
+		      </if>
+		      <if test="bean.lastUpdatedBy != null" >
+		        and LAST_UPDATED_BY = #{bean.lastUpdatedBy,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.creationDate != null" >
+		        and CREATION_DATE = #{bean.creationDate,jdbcType=TIMESTAMP}
+		      </if>
+		      <if test="bean.createdBy != null" >
+		        and CREATED_BY = #{bean.createdBy,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.lastUpdateIp != null" >
+		        and LAST_UPDATE_IP = #{bean.lastUpdateIp,jdbcType=VARCHAR}
+		      </if>
+		      <if test="bean.version != null" >
+		        and VERSION = #{bean.version,jdbcType=DECIMAL}
+		      </if>
+		      <if test="bean.dataSourceId != null" >
+		        and DATASOURCE_ID = #{bean.dataSourceId,jdbcType=VARCHAR}
+		      </if>
+                <if test="bean.dbType != null" >
+                    and DB_TYPE = #{bean.dbType,jdbcType=VARCHAR}
+                </if>
+		     </trim>
+		      
+		      <if test="bean.tableType != null">
+                and TABLE_TYPE = #{bean.tableType,jdbcType=VARCHAR}
+            </if>
+			</if>
+			<if test="sfnConditions != null and sfnConditions.sql != ''">
+				or ${sfnConditions.sql}			
+			</if>
+		</where>
+		<choose>
+	        <when test="P_OrderBy !=null and P_OrderBy != ''">
+	            order by ${P_OrderBy}
+	        </when>
+	        <otherwise>
+	            order by creation_date desc
+	        </otherwise>
+    	</choose>
+</select>
+
+</mapper>

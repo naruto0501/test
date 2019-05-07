@@ -64,6 +64,10 @@
       <value>clientEncoding=UTF-8</value>
     </property>
   </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
      
     <!-- mybatis文件配置，扫描所有mapper文件 -->
       <bean id="sqlSessionFactory"
