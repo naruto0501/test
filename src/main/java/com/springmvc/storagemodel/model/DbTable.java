@@ -29,8 +29,6 @@ public class DbTable extends BeanBase {
 	private String id;
 	private String tableName;
 	private String tableComments;
-	private String sysApplicationId;
-	private String orgIdentity;
 	private String tableIsCreated;
 
 	private java.util.Date lastUpdateDateBegin;
@@ -89,22 +87,6 @@ public class DbTable extends BeanBase {
 
 	public void setTableComments(String tableComments) {
 		this.tableComments = tableComments;
-	}
-
-	public String getSysApplicationId() {
-		return sysApplicationId;
-	}
-
-	public void setSysApplicationId(String sysApplicationId) {
-		this.sysApplicationId = sysApplicationId;
-	}
-
-	public String getOrgIdentity() {
-		return orgIdentity;
-	}
-
-	public void setOrgIdentity(String orgIdentity) {
-		this.orgIdentity = orgIdentity;
 	}
 
 	public String getTableIsCreated() {

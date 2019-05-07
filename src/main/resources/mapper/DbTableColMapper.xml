@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="avicit.platform6.db.dbtablecol.dao.DbTableColDao">
+<mapper namespace="com.springmvc.storagemodel.dao.DbTableColDao">
 
-<resultMap id="DbTableColDTOMap" type="com.springmvc.storagemodel.dao.DbTableColDao">
+<resultMap id="DbTableColDTOMap" type="com.springmvc.storagemodel.model.DbTableColDTO">
 		<result property="id" column="ID" jdbcType="VARCHAR" />
 		<result property="tableId" column="TABLE_ID" jdbcType="VARCHAR" />
 		<result property="colName" column="COL_NAME" jdbcType="VARCHAR" />
@@ -15,8 +15,6 @@
 		<result property="colIsPk" column="COL_IS_PK" jdbcType="VARCHAR" />
 		<result property="colIsSys" column="COL_IS_SYS" jdbcType="VARCHAR" />
 		<result property="colIsUnique" column="COL_IS_UNIQUE" jdbcType="VARCHAR" />
-		<result property="sysApplicationId" column="SYS_APPLICATION_ID" jdbcType="VARCHAR" />
-		<result property="orgIdentity" column="ORG_IDENTITY" jdbcType="VARCHAR" />
 		<result property="lastUpdateDate" column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP" />
 		<result property="lastUpdatedBy" column="LAST_UPDATED_BY" jdbcType="VARCHAR" />
 		<result property="creationDate" column="CREATION_DATE" jdbcType="TIMESTAMP" />
@@ -38,8 +36,6 @@
 		t1.col_is_pk                      ,
 		t1.col_decimal                   ,
 		t1.col_is_unique                  ,
-		t1.sys_application_id             ,
-		t1.org_identity                   ,
 		t1.last_update_date               ,
 		t1.last_updated_by                ,
 		t1.creation_date                  ,
@@ -79,12 +75,6 @@
 			</if>
 			<if test="bean.colIsUnique != null and bean.colIsUnique != ''">
 				and t1.COL_IS_UNIQUE like concat(concat('%',#{bean.colIsUnique}),'%') 
-			</if>
-			<if test="bean.sysApplicationId != null and bean.sysApplicationId != ''">
-				and t1.SYS_APPLICATION_ID like concat(concat('%',#{bean.sysApplicationId}),'%') 
-			</if>
-			<if test="bean.orgIdentity != null and bean.orgIdentity != ''">
-				and t1.ORG_IDENTITY like concat(concat('%',#{bean.orgIdentity}),'%') 
 			</if>
 			<if test="bean.lastUpdateDate != null and bean.lastUpdateDate != ''">
 				and t1.LAST_UPDATE_DATE like concat(concat('%',#{bean.lastUpdateDate}),'%') 
@@ -141,8 +131,6 @@
 		t1.col_comments                   ,
 		t1.col_is_pk                      ,
 		t1.col_is_unique                  ,
-		t1.sys_application_id             ,
-		t1.org_identity                   ,
 		t1.last_update_date               ,
 		t1.last_updated_by                ,
 		t1.creation_date                  ,
@@ -183,12 +171,6 @@
 			</if>
 			<if test="bean.colIsUnique != null and bean.colIsUnique != ''">
 				or t1.COL_IS_UNIQUE like concat(concat('%',#{bean.colIsUnique}),'%')  
-			</if>
-			<if test="bean.sysApplicationId != null and bean.sysApplicationId != ''">
-				or t1.SYS_APPLICATION_ID like concat(concat('%',#{bean.sysApplicationId}),'%')  
-			</if>
-			<if test="bean.orgIdentity != null and bean.orgIdentity != ''">
-				or t1.ORG_IDENTITY like concat(concat('%',#{bean.orgIdentity}),'%')  
 			</if>
 			<if test="bean.lastUpdateDate != null and bean.lastUpdateDate != ''">
 				or t1.LAST_UPDATE_DATE like concat(concat('%',#{bean.lastUpdateDate}),'%')  
@@ -236,8 +218,6 @@
 		t1.col_comments                   ,
 		t1.col_is_pk                      ,
 		t1.col_is_unique                  ,
-		t1.sys_application_id             ,
-		t1.org_identity                   ,
 		t1.col_decimal                   ,
 		t1.last_update_date               ,
 		t1.last_updated_by                ,
@@ -278,12 +258,6 @@
 			<if test="colIsUnique != null and colIsUnique != ''">
 				and t1.COL_IS_UNIQUE =#{colIsUnique}
 			</if>
-			<if test="sysApplicationId != null and sysApplicationId != ''">
-				and t1.SYS_APPLICATION_ID =#{sysApplicationId}
-			</if>
-			<if test="orgIdentity != null and orgIdentity != ''">
-				and t1.ORG_IDENTITY =#{orgIdentity}
-			</if>
 			<if test="lastUpdateDate != null and lastUpdateDate != ''">
 				and t1.LAST_UPDATE_DATE =#{lastUpdateDate}
 			</if>
@@ -321,8 +295,6 @@
 		t1.col_is_pk                      ,
 		t1.col_is_unique                  ,
 		t1.col_decimal                   ,
-		t1.sys_application_id             ,
-		t1.org_identity                   ,
 		t1.last_update_date               ,
 		t1.last_updated_by                ,
 		t1.creation_date                  ,
@@ -347,8 +319,6 @@
 		t1.col_is_pk                      ,
 		t1.col_is_unique                  ,
 		t1.col_decimal                   ,
-		t1.sys_application_id             ,
-		t1.org_identity                   ,
 		t1.last_update_date               ,
 		t1.last_updated_by                ,
 		t1.creation_date                  ,
@@ -368,7 +338,7 @@ and d.table_name= #{table_name}
 </select>
 
 <!-- 新增对象 DB_TABLE_COL -->
-<insert id="insertDbTableCol" parameterType="avicit.platform6.db.dbtablecol.dto.DbTableColDTO">
+<insert id="insertDbTableCol" parameterType="com.springmvc.storagemodel.model.DbTableColDTO">
 	insert into db_table_col
 	<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -403,12 +373,6 @@ and d.table_name= #{table_name}
 			</if>
 			<if test="colIsUnique != null">
 				col_is_unique,
-			</if>
-			<if test="sysApplicationId != null">
-				sys_application_id,
-			</if>
-			<if test="orgIdentity != null">
-				org_identity,
 			</if>
 			<if test="lastUpdateDate != null">
 				last_update_date,
@@ -466,12 +430,6 @@ and d.table_name= #{table_name}
 			<if test="colIsUnique != null">
 				#{colIsUnique,jdbcType=VARCHAR},
 			</if>
-			<if test="sysApplicationId != null">
-				#{sysApplicationId,jdbcType=VARCHAR},
-			</if>
-			<if test="orgIdentity != null">
-				#{orgIdentity,jdbcType=VARCHAR},
-			</if>
 			<if test="lastUpdateDate != null">
 				#{lastUpdateDate},
 			</if>
@@ -509,8 +467,6 @@ and d.table_name= #{table_name}
 			col_comments,
 			col_is_pk,
 			col_is_unique,
-			sys_application_id,
-			org_identity,
 			last_update_date,
 			last_updated_by,
 			creation_date,
@@ -531,8 +487,6 @@ and d.table_name= #{table_name}
 					#{item.colComments,jdbcType=VARCHAR},
 					#{item.colIsPk,jdbcType=VARCHAR},
 					#{item.colIsUnique,jdbcType=VARCHAR},
-					#{item.sysApplicationId,jdbcType=VARCHAR},
-					#{item.orgIdentity,jdbcType=VARCHAR},
 					#{item.lastUpdateDate},
 					#{item.lastUpdatedBy,jdbcType=VARCHAR},
 					#{item.creationDate},
@@ -544,7 +498,7 @@ and d.table_name= #{table_name}
 	</foreach>
 </insert>
 <!-- 更新对象 DB_TABLE_COL -->
-<update id="updateDbTableColSensitive" parameterType="avicit.platform6.db.dbtablecol.dto.DbTableColDTO">
+<update id="updateDbTableColSensitive" parameterType="com.springmvc.storagemodel.model.DbTableColDTO">
 	update db_table_col 
 	<set>
 			<if test="id != null">
@@ -580,12 +534,6 @@ and d.table_name= #{table_name}
 			<if test="colIsUnique != null">
 				col_is_unique                  =#{colIsUnique,jdbcType=VARCHAR},
 			</if>
-			<if test="sysApplicationId != null">
-				sys_application_id             =#{sysApplicationId,jdbcType=VARCHAR},
-			</if>
-			<if test="orgIdentity != null">
-				org_identity                   =#{orgIdentity,jdbcType=VARCHAR},
-			</if>
 			<if test="lastUpdateDate != null">
 				last_update_date               =#{lastUpdateDate},
 			</if>
@@ -611,7 +559,7 @@ and d.table_name= #{table_name}
 		where id = #{id} and version =#{version}
 </update>
 <!-- 更新对象 DB_TABLE_COL -->
-<update id="updateDbTableColAll" parameterType="avicit.platform6.db.dbtablecol.dto.DbTableColDTO">
+<update id="updateDbTableColAll" parameterType="com.springmvc.storagemodel.model.DbTableColDTO">
 	update db_table_col 
 		set
 			id                             =#{id,jdbcType=VARCHAR},
@@ -625,8 +573,6 @@ and d.table_name= #{table_name}
 			col_comments                   =#{colComments,jdbcType=VARCHAR},
 			col_is_pk                      =#{colIsPk,jdbcType=VARCHAR},
 			col_is_unique                  =#{colIsUnique,jdbcType=VARCHAR},
-			sys_application_id             =#{sysApplicationId,jdbcType=VARCHAR},
-			org_identity                   =#{orgIdentity,jdbcType=VARCHAR},
 			last_update_date               =#{lastUpdateDate},
 			last_updated_by                =#{lastUpdatedBy,jdbcType=VARCHAR},
 			creation_date                  =#{creationDate},
@@ -652,8 +598,6 @@ and d.table_name= #{table_name}
 			col_comments                   =#{item.colComments,jdbcType=VARCHAR},
 			col_is_pk                      =#{item.colIsPk,jdbcType=VARCHAR},
 			col_is_unique                  =#{item.colIsUnique,jdbcType=VARCHAR},
-			sys_application_id             =#{item.sysApplicationId,jdbcType=VARCHAR},
-			org_identity                   =#{item.orgIdentity,jdbcType=VARCHAR},
 			last_update_date               =#{item.lastUpdateDate},
 			last_updated_by                =#{item.lastUpdatedBy,jdbcType=VARCHAR},
 			creation_date                  =#{item.creationDate},

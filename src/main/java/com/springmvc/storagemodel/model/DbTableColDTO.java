@@ -51,9 +51,6 @@ public class DbTableColDTO extends BeanBase {
 
 	private String colIsUnique;
 
-	private String sysApplicationId;
-
-	private String orgIdentity;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private java.util.Date lastUpdateDateBegin;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -165,22 +162,6 @@ public class DbTableColDTO extends BeanBase {
 
 	public void setColIsUnique(String colIsUnique) {
 		this.colIsUnique = colIsUnique;
-	}
-
-	public String getSysApplicationId() {
-		return sysApplicationId;
-	}
-
-	public void setSysApplicationId(String sysApplicationId) {
-		this.sysApplicationId = sysApplicationId;
-	}
-
-	public String getOrgIdentity() {
-		return orgIdentity;
-	}
-
-	public void setOrgIdentity(String orgIdentity) {
-		this.orgIdentity = orgIdentity;
 	}
 
 	public java.util.Date getLastUpdateDateBegin() {

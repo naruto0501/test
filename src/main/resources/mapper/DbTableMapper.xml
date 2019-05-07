@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="avicit.platform6.db.dbtabletype.dao.DbTableDao">
-    <resultMap id="BaseResultMap" type="com.springmvc.storagemodel.dao.DbTableDao">
+<mapper namespace="com.springmvc.storagemodel.dao.DbTableDao">
+    <resultMap id="BaseResultMap" type="com.springmvc.storagemodel.model.DbTable">
        <result property="id" column="ID" jdbcType="VARCHAR" />
 		<result property="tableName" column="TABLE_NAME" jdbcType="VARCHAR" />
 		<result property="tableComments" column="TABLE_COMMENTS" jdbcType="VARCHAR" />
-		<result property="sysApplicationId" column="SYS_APPLICATION_ID" jdbcType="VARCHAR" />
-		<result property="orgIdentity" column="ORG_IDENTITY" jdbcType="VARCHAR" />
 		<result property="tableIsCreated" column="TABLE_IS_CREATED" jdbcType="VARCHAR" />
 		<result property="lastUpdateDate" column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP" />
 		<result property="lastUpdatedBy" column="LAST_UPDATED_BY" jdbcType="VARCHAR" />
@@ -19,7 +17,7 @@
         <result property="dbType" column="DB_TYPE" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-    ID, TABLE_NAME, TABLE_COMMENTS, SYS_APPLICATION_ID, ORG_IDENTITY, TABLE_IS_CREATED, TABLE_TYPE, 
+    ID, TABLE_NAME, TABLE_COMMENTS, TABLE_IS_CREATED, TABLE_TYPE,
      LAST_UPDATE_DATE, LAST_UPDATED_BY, CREATION_DATE, CREATED_BY, LAST_UPDATE_IP, VERSION,DATASOURCE_ID,DB_TYPE
   </sql>
  
@@ -43,7 +41,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   
-  <insert id="insert" parameterType="avicit.platform6.db.dbtabletype.dto.DbTable" >
+  <insert id="insert" parameterType="com.springmvc.storagemodel.model.DbTable" >
     insert into DB_TABLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -54,12 +52,6 @@
       </if>
       <if test="tableComments != null" >
         TABLE_COMMENTS,
-      </if>
-      <if test="sysApplicationId != null" >
-        SYS_APPLICATION_ID,
-      </if>
-      <if test="orgIdentity != null" >
-        ORG_IDENTITY,
       </if>
       <if test="tableIsCreated != null" >
         TABLE_IS_CREATED,
@@ -102,12 +94,6 @@
       <if test="tableComments != null" >
         #{tableComments,jdbcType=VARCHAR},
       </if>
-      <if test="sysApplicationId != null" >
-        #{sysApplicationId,jdbcType=VARCHAR},
-      </if>
-      <if test="orgIdentity != null" >
-        #{orgIdentity,jdbcType=VARCHAR},
-      </if>
       <if test="tableIsCreated != null" >
         #{tableIsCreated,jdbcType=VARCHAR},
       </if>
@@ -140,7 +126,7 @@
         </if>
     </trim>
   </insert>
-  <update id="update" parameterType="avicit.platform6.db.dbtabletype.dto.DbTable" >
+  <update id="update" parameterType="com.springmvc.storagemodel.model.DbTable" >
     update DB_TABLE
     <set >
       <if test="tableName != null and  tableName !=''" >
@@ -148,12 +134,6 @@
       </if>
       <if test="tableComments != null and tableComments != ''" >
         TABLE_COMMENTS = #{tableComments,jdbcType=VARCHAR},
-      </if>
-      <if test="sysApplicationId != null and sysApplicationId!=''" >
-        SYS_APPLICATION_ID = #{sysApplicationId,jdbcType=VARCHAR},
-      </if>
-      <if test="orgIdentity != null and orgIdentity!=''" >
-        ORG_IDENTITY = #{orgIdentity,jdbcType=VARCHAR},
       </if>
       <if test="tableIsCreated != null and tableIsCreated!=''" >
         TABLE_IS_CREATED = #{tableIsCreated,jdbcType=VARCHAR},
@@ -190,15 +170,15 @@
   </update>
   
   
-  <select id="selectTableByName" resultType="avicit.platform6.db.dbtabletype.dto.DbTable">
+  <select id="selectTableByName" resultType="com.springmvc.storagemodel.model.DbTable">
   	select * from DB_TABLE where TABLE_NAME = #{tableName,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectTableByNameAndDataSourceId" resultType="avicit.platform6.db.dbtabletype.dto.DbTable">
+  <select id="selectTableByNameAndDataSourceId" resultType="com.springmvc.storagemodel.model.DbTable">
   	select * from DB_TABLE where TABLE_NAME = #{tableName,jdbcType=VARCHAR} and DATASOURCE_ID = #{dataSourceId,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectList"  parameterType="avicit.platform6.db.dbtabletype.dto.DbTable"  resultMap="BaseResultMap" >
+  <select id="selectList"  parameterType="com.springmvc.storagemodel.model.DbTable"  resultMap="BaseResultMap" >
   	select * from DB_TABLE
   	<where>
   	 <if test="id != null" >
@@ -209,12 +189,6 @@
       </if>
       <if test="tableComments != null" >
         and TABLE_COMMENTS = #{tableComments,jdbcType=VARCHAR}
-      </if>
-      <if test="sysApplicationId != null" >
-        and SYS_APPLICATION_ID = #{sysApplicationId,jdbcType=VARCHAR}
-      </if>
-      <if test="orgIdentity != null" >
-        and ORG_IDENTITY = #{orgIdentity,jdbcType=VARCHAR}
       </if>
       <if test="tableIsCreated != null" >
         and TABLE_IS_CREATED = #{tableIsCreated,jdbcType=VARCHAR}
@@ -276,12 +250,6 @@
             <if test="bean.tableComments != null and bean.tableComments != ''">
                 AND TABLE_COMMENTS like concat(concat('%',#{bean.tableComments}),'%') 
             </if>
-            <if test="bean.sysApplicationId != null" >
-		        and SYS_APPLICATION_ID = #{bean.sysApplicationId,jdbcType=VARCHAR}
-		      </if>
-		      <if test="bean.orgIdentity != null" >
-		        and ORG_IDENTITY = #{bean.orgIdentity,jdbcType=VARCHAR}
-		      </if>
 		      <if test="bean.tableIsCreated != null and bean.tableIsCreated != ''" >
 		        and TABLE_IS_CREATED = #{bean.tableIsCreated,jdbcType=VARCHAR}
 		      </if>
@@ -337,12 +305,6 @@
             <if test="bean.tableComments != null">
                 or TABLE_COMMENTS like concat(concat('%',#{bean.tableComments}),'%') 
             </if>
-            <if test="bean.sysApplicationId != null" >
-		        and SYS_APPLICATION_ID = #{bean.sysApplicationId,jdbcType=VARCHAR}
-		      </if>
-		      <if test="bean.orgIdentity != null" >
-		        and ORG_IDENTITY = #{bean.orgIdentity,jdbcType=VARCHAR}
-		      </if>
 		      <if test="bean.tableIsCreated != null" >
 		        and TABLE_IS_CREATED = #{bean.tableIsCreated,jdbcType=VARCHAR}
 		      </if>
