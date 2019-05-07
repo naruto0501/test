@@ -1,0 +1,33 @@
+/**
+注意：此处样式会覆盖设计区设定样式，所以此处不要设定颜色等
+ */
+
+.mce-content-body table {
+    border-collapse: collapse;
+    width: 94%;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+.mce-content-body table caption, .mce-content-body table td, .mce-content-body table th {
+    height: 30px;
+}
+
+.mce-content-body input {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+.mce-content-body input:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-bottom: 1px solid #606365;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}

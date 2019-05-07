@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * cache的通用工具类
- * @author avicit
- *
- */
+
 public class BaseCacheUtil {
 
 	/**

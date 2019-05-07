@@ -13,10 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * @author admin
- *
- */
+
 @Controller
 public class MyExceptionHandler implements HandlerExceptionResolver {  
 	

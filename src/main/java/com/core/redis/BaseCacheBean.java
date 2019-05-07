@@ -2,12 +2,6 @@ package com.core.redis;
 
 import java.util.Map;
 
-/**
- * 缓存对象接口，所有需要缓存的实体对象必须实现该接口
- * returnCacheKey()返回map对象，key为string，value可以为string，可以为BaseCacheUtil对象
- * @author avicit
- *
- */
 public interface BaseCacheBean {
 
 	/**

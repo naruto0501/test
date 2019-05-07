@@ -1,0 +1,252 @@
+body {
+    font-family: "Microsoft YaHei", Open Sans, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 62.5%;
+}
+
+#top-template .container {
+    width: 1200px;
+    min-height: 80px;
+}
+#top-template .container a {
+    margin: 5px 5px;
+}
+#top-template .container .closeButton{
+    position: fixed;
+    top: 25px;
+    right: 10px;
+}
+
+#top-style .container {
+    width: 1200px;
+    min-height: 80px;
+}
+#top-style .container a {
+    margin: 5px 5px;
+}
+#top-style .container .closeButton{
+    position: fixed;
+    top: 25px;
+    right: 10px;
+}
+
+.accordion-toggle {
+    font-family: "Microsoft YaHei", Open Sans, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#modules {
+    margin-bottom: 10px;
+    z-index: 1;
+    /*height: 335px;*/
+    overflow-y: auto;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.error_block{
+	color:#d68273 !important;
+}
+
+#formArea {
+    margin-top: 5px;
+    margin-right: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#attrArea {
+    background: #eee;
+    margin-bottom: 10px;
+    z-index: 1;
+}
+
+#dropzone {
+    padding: 8px;
+    background: #eee;
+    min-height: 500px;
+    z-index: 0;
+}
+
+.editorArea{
+	padding: 0 5px;
+	background-color: #e4e6e9;
+}
+
+.attrArea{
+	padding: 0;
+}
+
+.left-area {
+    padding: 0px 5px;
+    width: 180px;
+    float: left;
+}
+
+.left-area ul {
+    margin-left: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.ele-item .preview {
+    display: block;
+    color: #666;
+    font-size: 1em;
+    line-height: 24px;
+    padding: 1px 8px;
+    transition: all 0.5s ease-out 0s;
+}
+
+.ele-item div:hover {
+    background-color: rgb(240, 252, 255);
+    border: 1px dashed rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.ele-item .preview span {
+    display: inline-block;
+    color: #666;
+}
+
+.ele-item .preview .eleicon {
+    float: right;
+    font-size: 1em;
+}
+
+.domele-title {
+    color: #4c8fbd;
+    font-size: 2.4em;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    width: 93%;
+    float: left;
+    margin: 5px;
+}
+
+.ele-item .view {
+    display: none;
+}
+
+.demo .preview {
+    display: none;
+}
+
+.demo .view {
+    display: block;
+    position: relative;
+}
+
+.ele-item {
+    list-style: none;
+    height: 30px;
+    float: left;
+    min-width: 75px;
+    padding-left: 1px;
+}
+
+.ele-item .drag {
+    position: absolute;
+    top: 8px;
+    right: 0px;
+    cursor: pointer;
+}
+
+.ele-item .label {
+    display: inline-block;
+    padding: 2px 2px;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #ffffff;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #999999;
+}
+
+.selectoptions, .selectvalues {
+    width: 60px;
+    min-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+}
+
+.select-input {
+    width: 60px;
+    margin-bottom: 5px;
+}
+
+.selectoptions li, .selectvalues li {
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    width: 50px;
+    font-weight: normal;
+    color: rgb(69, 69, 69);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(197, 197, 197);
+    border-image: initial;
+    background: rgb(246, 246, 246);
+}
+
+.ui-state-highlight {
+    border: 1px solid #dad55e !important;
+    background: #fffa90 !important;
+    color: #777620 !important;
+}
+
+.widget-data-box {
+    padding: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    margin: 3px 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.widget-data-body {
+    padding-left: 5px;
+    overflow-y: auto;
+    background-color: transparent;
+}
+
+.widget-data-header {
+    background: none;
+    border-width: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    width: 93%;
+    margin: 5px;
+    color: #4c8fbd;
+    box-sizing: content-box;
+    position: relative;
+    min-height: 30px;
+    border-bottom-width: 1px;
+    text-align: center;
+}
+
+.widget-data-title {
+	font-size: 1.2em;
+    font-weight: bold;
+    line-height: 30px;
+    padding: 0;
+    margin: 0;
+    display: inline;
+}
+
+.widget-data-toolbar {
+    display: inline-block;
+    /*padding: 0 10px;*/
+    line-height: 30px;
+    float: right;
+    position: relative;
+}
+
+.widget-data-toolbar > a {
+    font-size: 14px;
+    margin: 0 2px;
+    display: inline-block;
+    padding: 0;
+    line-height: 24px;
+}

@@ -2,12 +2,7 @@ package com.core.redis;
 
 import java.io.Serializable;
 
-/**
- * 实现BaseCacheBean需要的存储对象
- * 用于配置缓存指向关系
- * @author avicit
- *
- */
+
 public class BaseCacheConf implements Serializable {
 
 	/**

@@ -18,20 +18,7 @@ import com.core.redis.JedisSentinelPool;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.utils.JsonHelper;
 
-/**
- * 
- * Title   : BaseCacheManager.java
- * 类描述      ：xxxxxx 
- * 作者           : lidong@avicit.com  
- * 创建时间 : 2014-12-8 下午4:46:25
- * 版本           : 1.00
- * 
- * 修改记录: 
- * 版本            修改人          修改时间                  修改内容描述
- * ----------------------------------------
- * 1.00     xx          2014-12-8 下午4:46:25
- * ----------------------------------------
- */
+
 public class BaseCacheManager {
 	
 	private static final String SYSTEM_CACHE_KEY = "_SYSTEM_CACHE_KEY_";//内置缓存对象前缀，用于存放已经放置进缓存的KEY，并与对应的实体关联，便于重新加载时清空缓存使用
