@@ -3,26 +3,6 @@ package com.springmvc.storagemodel.model;
 
 import com.springmvc.bean.BeanBase;
 
-/**
- * <p>
- * 金航数码科技有限责任公司
- * </p>
- * <p>
- * 作者：请填写
- * </p>
- * <p>
- * 邮箱：请填写
- * </p>
- * <p>
- * 创建时间： 2017-05-20 18:07
- * </p>
- * <p>
- * 类说明：请填写
- * </p>
- * <p>
- * 修改记录：
- * </p>
- */
 public class DbTable extends BeanBase {
 	private static final long serialVersionUID = 1L;
 

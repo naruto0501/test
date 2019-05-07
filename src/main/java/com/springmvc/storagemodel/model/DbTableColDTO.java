@@ -3,26 +3,7 @@ package com.springmvc.storagemodel.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.springmvc.bean.BeanBase;
 
-/**
- * <p>
- * 金航数码科技有限责任公司
- * </p>
- * <p>
- * 作者：请填写
- * </p>
- * <p>
- * 邮箱：请填写
- * </p>
- * <p>
- * 创建时间： 2017-05-20 16:11
- * </p>
- * <p>
- * 类说明：请填写
- * </p>
- * <p>
- * 修改记录：
- * </p>
- */
+
 public class DbTableColDTO extends BeanBase {
 	private static final long serialVersionUID = 1L;
 
