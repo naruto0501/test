@@ -1,41 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="avicit.platform6.api.session.SessionHelper"%>
-<%@page import="avicit.platform6.commons.utils.ViewUtil"%>
+<%@page import="com.utils.CommonUtil"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>单位列表</title>
-<base href="<%=ViewUtil.getRequestPath(request)%>">
+<base href="<%=CommonUtil.getRequestPath(request)%>">
 <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="static/css/platform/aceadmin/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="static/css/platform/aceadmin/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="static/css/aceadmin/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/css/aceadmin/css/font-awesome.min.css"/>
 
-    <link rel="stylesheet" href="static/css/platform/eform/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="static/css/jquery-ui.css"/>
 
 
-<link rel="stylesheet" href="avicit/platform6/eform/formdesign/css/subtable.css"/>
+<link rel="stylesheet" href="jsp/module/eformdesigner/css/subtable.css"/>
 
 <!-- basic scripts -->
 <!--[if !IE]> -->
-<script src="static/js/platform/aceadmin/jquery.min.js"></script>
+<script src="static/js/aceadmin/jquery.min.js"></script>
 <!-- <![endif]-->
 <!--[if IE]>
-<script src="static/js/platform/aceadmin/jquery1x.min.js"></script>
+<script src="static/js/aceadmin/jquery1x.min.js"></script>
 <![endif]-->
-<script src="static/js/platform/aceadmin/bootstrap.min.js"></script>
-<script src="static/js/platform/eform/jquery-ui.min.js"></script>
+<script src="static/js/aceadmin/bootstrap.min.js"></script>
+	<script src="static/js/jquery-ui.js"></script>
+<script src="static/js/layer-v2.3/layer/layer.js"></script>
 <script type="text/javascript" src="static/h5/layer-v2.3/layer/layer.js"></script>
-<script src="static/js/platform/eform/common.js"></script>
-<script src="static/js/platform/eform/mydialog.js"></script>
-<script src="static/js/platform/eform/selectarea.js"></script>
-<script src="static/js/platform/eform/subdatatable.js"></script>
-<%--选通用代码--%>
-<script src="static/h5/common-ext/window-ext.js"></script>
-<script src="static/h5/avicSelectBar/compent/lookupTypeSelect/lookupTypeSelect.js"></script>
-<link href="static/h5/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
-<script src="static/h5/jquery-select2/3.4/select2.min.js"></script>
+<script src="static/js/common.js"></script>
+<script src="static/js/mydialog.js"></script>
+<script src="static/js/selectarea.js"></script>
+<script src="static/js/subdatatable.js"></script>
+
 <style type="text/css">
 .help-button {
 	display: inline-block;
@@ -294,7 +290,7 @@ html,body{
 			$("#callB").removeClass("hidden");
 		}
 	}
-	var baseUrl = "<%=ViewUtil.getRequestPath(request)%>";
+	var baseUrl = "<%=CommonUtil.getRequestPath(request)%>";
 	 $('[data-rel=popover]').popover({container:'body'});
 		$("#onCallbackEvent").click(function () {
 		    var _this = this;

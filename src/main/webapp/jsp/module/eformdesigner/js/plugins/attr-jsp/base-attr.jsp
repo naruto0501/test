@@ -212,17 +212,4 @@ $('input[name=colIsVisible]').click(function(event){
 	    }
 	}
 });
-
-
-if (EformConfig.globalPropExt){
-    var table;
-    $.ajax({
-        url: EformConfig.globalPropExt,
-        async: false,
-        success: function (data) {
-            table = $(data);
-        }
-    });
-    $("#base_exttable").append(table);
-}
 </script>

@@ -262,7 +262,7 @@ var MyElement = {
                 skin: 'bs-modal',
                 area: ['45%', '85%'],
                 maxmin: false,
-                content: "avicit/platform6/eform/formdesign/js/plugins/datatable/selectcolumn.jsp",
+                content: "jsp/module/eformdesigner/js/plugins/datatable/selectcolumn.jsp",
                 btn: ['确定', '取消'],
                 yes: function(index, layero){
                 	var frm = layero.find('iframe')[0].contentWindow;

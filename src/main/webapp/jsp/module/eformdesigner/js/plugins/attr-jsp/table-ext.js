@@ -288,31 +288,31 @@ var MyElement = {
     	    }
         });
         
-        var selectCreatedDbTable = new SelectCreatedDbTable("dbid", "dbname");
-        selectCreatedDbTable.init(function(data) {
-            $("#dbname").val(data.tablename);
-            $("#dataname").val(data.name);
-            ui.find(".eleattr-span").each(function(){
-            	var text = $(this).html();
-            	var json = $.parseJSON(text);
-            	if (json.hasOwnProperty("colName")){
-            		json.colName = "";
-            	}
-            	if (json.hasOwnProperty("colLabel")){
-            		json.colLabel = "";
-            	}
-            	if (json.hasOwnProperty("domId")){
-            		json.domId = "";
-            	}
-            	$(this).html(JSON.stringify(json));
-            });
-            //选择存储模型后 设置当前选择存储id
-            EformEditor.nowDbid = data.id;
-            $("#paralist").val("");
-            $("#paraarea").html("");
-            $("#dbname").trigger("keyup");
-            
-        });
+        // var selectCreatedDbTable = new SelectCreatedDbTable("dbid", "dbname");
+        // selectCreatedDbTable.init(function(data) {
+        //     $("#dbname").val(data.tablename);
+        //     $("#dataname").val(data.name);
+        //     ui.find(".eleattr-span").each(function(){
+        //     	var text = $(this).html();
+        //     	var json = $.parseJSON(text);
+        //     	if (json.hasOwnProperty("colName")){
+        //     		json.colName = "";
+        //     	}
+        //     	if (json.hasOwnProperty("colLabel")){
+        //     		json.colLabel = "";
+        //     	}
+        //     	if (json.hasOwnProperty("domId")){
+        //     		json.domId = "";
+        //     	}
+        //     	$(this).html(JSON.stringify(json));
+        //     });
+        //     //选择存储模型后 设置当前选择存储id
+        //     EformEditor.nowDbid = data.id;
+        //     $("#paralist").val("");
+        //     $("#paraarea").html("");
+        //     $("#dbname").trigger("keyup");
+        //
+        // });
         $("#addpara").click(function () {
         	/*if (isEmptyObject($("#dbid").val())){
         		layer.msg('请先选择数据集！', {icon: 7});

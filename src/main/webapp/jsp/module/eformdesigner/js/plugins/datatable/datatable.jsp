@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="avicit.platform6.commons.utils.ViewUtil"%>
+<%@page import="com.utils.CommonUtil"%>
 <link href="static/h5/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
 <script src="static/h5/jquery-select2/3.4/select2.min.js"></script>
 
@@ -202,5 +202,5 @@
 </form>
 
 <script>
-var baseUrl = "<%=ViewUtil.getRequestPath(request)%>"
+var baseUrl = "<%=CommonUtil.getRequestPath(request)%>"
 </script>

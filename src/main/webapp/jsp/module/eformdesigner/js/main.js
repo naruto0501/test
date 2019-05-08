@@ -190,182 +190,6 @@ var editorUtil = new Object({
     }
 });
 
-
-var dataarea = function (id) {
-    this.area = $("#" + id);
-    this.widgetbox = null;
-    this.widgetheader = null;
-    this.toolbar = null;
-    this.widgetbody = null;
-    this.widgetmain = null;
-    this.dbarray = [];
-    //树
-    this.dataTree = null;
-
-    // this.drawHtml();
-    this.initData();
-};
-
-dataarea.prototype = {
-    initData: function () {
-        var _this = this;
-        if (tableId) {
-            $.ajax({
-                url: 'platform/eform/eformViewInfoController/getDbCol/' + tableId,
-                contentType: "application/xml; charset=utf-8",
-                type: 'post',
-                dataType: 'json',
-                async: true,
-                success: function (r) {
-                    if (r != null) {
-                        _this.dbarray.push({dbid: tableId, dbname: tableName, colList: $.parseJSON(r.data)});
-                    }
-                }
-            });
-
-        } else {
-            _this.dbarray.push({dbid: "new", dbname: "主表"});
-        }
-    },
-    //画数据源展示区域
-    drawHtml: function () {
-
-        this.widgetbox = $('<div class="widget-data-box transparent"></div>');
-        this.widgetheader = $('<div class="widget-data-header"></div>');
-        this.widgetheader.append('<span class="widget-data-title lighter">数据源</span>');
-        /*        this.toolbar = $('<div class="widget-data-toolbar no-border"></div>');
-         this.toolbar.appendTo(this.widgetheader);
-         this.addButton("添加", "ace-icon fa fa-plus", "#ACD392", function () {
-         });
-         this.addButton("删除", "ace-icon fa fa-times", "#E09E96", function () {
-         });*/
-        this.widgetbody = $('<div class="widget-data-body"></div>');
-        this.widgetmain = $('<div class="widget-main no-padding"><ul id="dataTreeUl" class="ztree"></ul></div>');
-        this.widgetmain.appendTo(this.widgetbody);
-        this.widgetbody.css("height", ($(window).height() - 55 - 320 - 31 - 10 - 20) + "px");
-
-        this.widgetbox.append(this.widgetheader).append(this.widgetbody);
-        this.widgetbox.appendTo(this.area);
-
-        //默认树根节点
-        var zNodes = [
-            {
-                "id": "-1",
-                "pId": null,
-                "name": "主表：",
-                "icon": "static/h5/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/1_close.png"
-            }
-        ];
-        var setting = {
-            data: {
-                simpleData: {
-                    enable: true,
-                    idKey: "id",
-                    pIdkey: "pId"
-                }
-            }
-        };
-
-        //初始化树
-        dataTree = $.fn.zTree.init($("#dataTreeUl"), setting, zNodes);
-    },
-
-    addButton: function (title, icon, color, clickmethod) {
-        var button = $('<a title="' + title + '"></a>');
-        button.append('<i class="' + icon + '"></i>');
-        if (typeof(clickmethod) == "function") {
-            button.click(function () {
-                clickmethod();
-            });
-        } else if (typeof(clickmethod) == "string") {
-            button.attr("data-action", clickmethod);
-        }
-        if (color) {
-            button.css("color", color);
-        }
-        this.toolbar.append(button);
-    },
-
-    putDbData: function (id, json, index) {
-        for (var j = 0, l = this.dbarray.length; j < l; j++) {
-            if (this.dbarray[j].dbid == id) {
-                this.dbarray[j] = json;
-                return;
-            }
-        }
-        if (index != undefined) {
-            this.dbarray.splice(index, 0, json);
-        } else {
-            this.dbarray.push(json);
-        }
-
-    },
-    delDbData: function (id) {
-        for (var i = 0, l = this.dbarray.length; i < l; i++) {
-            if (this.dbarray[i].dbid == id && id != tableId) {
-                this.dbarray.splice(i, 1);
-                return;
-            }
-        }
-    },
-
-    getDbData: function (id) {
-        if (id) {
-            for (var i = 0, l = this.dbarray.length; i < l; i++) {
-                if (this.dbarray[i].id == id) {
-                    return this.dbarray[i];
-                }
-            }
-        }
-    },
-    putColData: function (dbid, colname, json) {
-        for (var j = 0; j < this.dbarray.length; j++) {
-            if (this.dbarray[j].dbid == dbid) {
-                if (this.dbarray[j].hasOwnProperty("colList")) {
-                    for (var i = this.dbarray[j].colList.length - 1; i > 0; i--) {
-                        if (this.dbarray[j].colList[i].colName == colname) {
-                            this.dbarray[j].colList[i] = json;
-                            return;
-                        } else {
-                            this.dbarray[j].colList.push(json);
-                        }
-                    }
-                } else {
-                    this.dbarray[j].colList = [json];
-                    return;
-                }
-            }
-        }
-    },
-    delColData: function (dbid, colname) {
-        for (var i = 0, l = this.dbarray.length; i < l; i++) {
-            if (this.dbarray[i].dbid == dbid) {
-                if (this.dbarray[i].hasOwnProperty("colList")) {
-                    for (var j = this.dbarray[i].colList.length - 1; j > 0; j--) {
-                        if (this.dbarray[i].colList[j].colName == colname) {
-                            this.dbarray[i].colList.splice(j, 1);
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-    },
-    getColData: function (dbid, colname) {
-        for (var i = 0, l = this.dbarray.length; i < l; i++) {
-            if (this.dbarray[i].dbid == dbid) {
-                if (this.dbarray[i].hasOwnProperty("colList")) {
-                    for (var j = this.dbarray[i].colList.length - 1; j > 0; j--) {
-                        if (this.dbarray[i].colList[j].colName == colname) {
-                            return this.dbarray[i].colList[j];
-                        }
-                    }
-                }
-            }
-        }
-    }
-};
-
 function FEformEditor(id) {
     this.editor = $("#" + id);
     this.element = [];
@@ -374,7 +198,6 @@ function FEformEditor(id) {
     this.nowDbid = tableId;//当前编辑表格对应存储模型id
     this.nowTableName = tableName;//当前编辑表格对应存储模型id
     this.isBpm = "";//电子表单是否走流程
-    this.isUpload = "";//电子表单是否包括附件
     this.formCode = "";//电子表单编码
     this.tinymceContentStyle = "default";//当前选择的tinymce内容样式，也是初始化默认载入的内容样式
     this.templateName = "";//模板名称
@@ -457,7 +280,6 @@ FEformEditor.prototype.drawLeftArea = function (editor) {
     var $dataArea = $('<div id="data_area" class="col-xs-12" style="padding-left: 0px;padding-right: 0px;"></div>');
     $dataArea.appendTo($el);
     $el.appendTo(editor);
-    DataArea = new dataarea("data_area");
 };
 
 
@@ -845,17 +667,17 @@ FEformEditor.prototype.setContent = function(){
 
 FEformEditor.prototype.setButtonArea = function(){
     var html = "<span style=\"color: #2fae95;\">\n" +
-        "                    <i class=\"icon iconfont icon-Preservation\" title=\"保存表单\" onclick=\"EformEditor.save()\"></i>\n" +
+        "                    <i class=\"fa fa-tag\" title=\"保存表单\" onclick=\"EformEditor.save()\"></i>\n" +
         "                </span>\n";
 
     if (eformPublishStatus == 1){
         html = html +"<span style=\"color: #2fae95;\">\n" +
-            "                    <i class=\"icon iconfont icon-baocunfabu\" title=\"新建版本\" onclick=\"EformEditor.saveNewVersion()\"></i>\n" +
+            "                    <i class=\"fa fa-tag\" title=\"新建版本\" onclick=\"EformEditor.saveNewVersion()\"></i>\n" +
             "                </span>\n";
 
     }else{
         html = html+ "<span style=\"color: #2fae95;\">\n" +
-            "                    <i class=\"icon iconfont icon-baocunfabu\" title=\"保存并发布表单\" onclick=\"EformEditor.saveAndPublish()\"></i>\n" +
+            "                    <i class=\"fa fa-tag\" title=\"保存并发布表单\" onclick=\"EformEditor.saveAndPublish()\"></i>\n" +
             "                </span>\n";
     }
     html = html +
@@ -863,25 +685,25 @@ FEformEditor.prototype.setButtonArea = function(){
         "                <span style=\"border-left: 1px solid #B5B5B5;padding-bottom: 0px;padding-top: 7px;\">\n" +
         "                </span>\n" +
         "                <span style=\"color: #B5B5B5;\">\n" +
-        "                    <i class=\"icon iconfont icon-open\" title=\"打开模板\" onclick=\"EformEditor.openTemplate()\"></i>\n" +
+        "                    <i class=\"fa fa-tag\" title=\"打开模板\" onclick=\"EformEditor.openTemplate()\"></i>\n" +
         "                </span>\n" +
         "                <span style=\"color: #B5B5B5;\">\n" +
-        "                    <i class=\"icon iconfont icon-style\" title=\"应用样式\" onclick=\"EformEditor.applyStyle()\"></i>\n" +
+        "                    <i class=\"fa fa-tag\" title=\"应用样式\" onclick=\"EformEditor.applyStyle()\"></i>\n" +
         "                </span>\n" +
         "                <span style=\"color:#B5B5B5;\">\n" +
-        "                \t<i class=\"icon iconfont icon-js\" title=\"JS文件扩展\" onclick=\"EformEditor.applyJs()\"></i>\n" +
+        "                \t<i class=\"fa fa-tag\" title=\"JS文件扩展\" onclick=\"EformEditor.applyJs()\"></i>\n" +
         "                </span>\n" +
         "                <span style=\"color: #B5B5B5;\">\n" +
-        "                    <i class=\"icon iconfont icon-preview\" title=\"预览表单\" onclick=\"EformEditor.preview(eformInfoStyle)\"></i>\n" +
+        "                    <i class=\"fa fa-tag\" title=\"预览表单\" onclick=\"EformEditor.preview(eformInfoStyle)\"></i>\n" +
         "                </span>\n" +
         "                <span style=\"color: #B5B5B5;\">\n" +
-        "                    <i class=\"icon iconfont icon-Save\" title=\"保存模板\" onclick=\"EformEditor.saveAsTemplate()\"></i>\n" +
+        "                    <i class=\"fa fa-tag\" title=\"保存模板\" onclick=\"EformEditor.saveAsTemplate()\"></i>\n" +
         "                </span>\n" +
         "                <span style=\"color: #B5B5B5;\">\n" +
-        "                    <i class=\"icon iconfont icon-setting\" title=\"自定义按钮\" onclick=\"EformEditor.customButton()\"></i>\n" +
+        "                    <i class=\"fa fa-tag\" title=\"自定义按钮\" onclick=\"EformEditor.customButton()\"></i>\n" +
         "                </span>\n" +
         "                <span style=\"color: #B5B5B5;\">\n" +
-        "                    <i class=\"icon iconfont icon-file\" title=\"帮助\" onclick=\"EformEditor.helpDoc()\"></i>\n" +
+        "                    <i class=\"fa fa-tag\" title=\"帮助\" onclick=\"EformEditor.helpDoc()\"></i>\n" +
         "                </span>";
     $("#buttonArea").html(html);
 };
@@ -1188,12 +1010,9 @@ FEformEditor.prototype.save = function (publish) {
 
     var showContent = $('<div class="mce-content-body"></div>');
     showContent.append(sourceContent);
-    
-    //表单校验
-    if(isDesign == false || isDesign == "false") {
-        if (!verifySaveForm(showContent))
-            return;
-    }
+
+    if (!verifySaveForm(showContent))
+        return;
 
     
 
@@ -1524,37 +1343,7 @@ FEformEditor.prototype.save = function (publish) {
     //保存表单
     function saveForm(eformFormInfoId, tinymceContentStyle, eformJs, showContent) {
         var restUrl = "platform/eform/bpmsClient/createtable";
-        if(isDesign == true || isDesign == "true") {
-            restUrl = "platform/eform/bpmsClient/saveFormForUml";
 
-            avicAjax.ajax({
-                url: restUrl,
-                type: 'POST',
-                data: {
-                    eformFormInfoId: eformFormInfoId,
-                    tableCss: EformConfig.contentCssPath + "/" + tinymceContentStyle + ".css",
-                    tableJs: eformJs,
-                    tableContent: showContent.prop('outerHTML'),
-                    dbarray: JSON.stringify(DataArea.dbarray),
-                    version:version
-                },
-                dataType: 'json',
-                success: function (backData, status) {
-                    if (backData.success == true) {
-                        if (!ifPublish) {
-                            refreshContent(eformFormInfoId);
-                            layer.msg('保存表单成功！', {icon: 1});
-                        }
-                        else {
-                            _this.doPublish('保存并发布表单成功！');
-                        }
-                    }
-                    else {
-                            layer.msg('保存表单失败！', {icon: 2});
-                    }
-                }
-            });
-        } else {
             $("#saveEform").modal("show");
 
             $("#saveEformButton").unbind("click");
@@ -1583,7 +1372,7 @@ FEformEditor.prototype.save = function (publish) {
                                 layer.msg('该数据库表名称已存在！', {icon: 7});
                             }
                             else {
-                                avicAjax.ajax({
+                                $.ajax({
                                     url: restUrl,
                                     type: 'POST',
                                     data: {
@@ -1594,7 +1383,7 @@ FEformEditor.prototype.save = function (publish) {
                                         tableCss: EformConfig.contentCssPath + "/" + tinymceContentStyle + ".css",
                                         tableJs: eformJs,
                                         tableContent: showContent.prop('outerHTML'),
-                                        dbarray: JSON.stringify(DataArea.dbarray),
+                                        dbarray: "{}",
                                         version:version
                                     },
                                     dataType: 'json',
@@ -1630,17 +1419,14 @@ FEformEditor.prototype.save = function (publish) {
                     );
                 }
             });
-        }
+
     }
 
     //更新表单
     function updateForm(eformFormInfoId, tableName, tinymceContentStyle, eformJs, showContent) {
         var restUrl = "platform/eform/bpmsClient/updateForm";
-        if(isDesign == true || isDesign == "true") {
-            restUrl = "platform/eform/bpmsClient/saveFormForUml";
-        }
 
-        avicAjax.ajax({
+        $.ajax({
             url: restUrl,
             type: 'POST',
             data: {
@@ -1673,7 +1459,7 @@ FEformEditor.prototype.save = function (publish) {
     function saveNewVersion(eformFormInfoId, tableName, tinymceContentStyle, eformJs, showContent) {
         var restUrl = "platform/eform/bpmsClient/saveNewVersion";
 
-        avicAjax.ajax({
+        $.ajax({
             url: restUrl,
             type: 'POST',
             data: {
@@ -2094,14 +1880,11 @@ function bindContentEleEvent(eleViewId, eleCode) {
 
                 //自动生成数据库字段名称，用户可修改
                 if (eleCode != "datatable" && $("#colName").val() == "" && $("#colLabel").val() == "" && tableattr.datatype == "0") {
-                    if(isDesign == true || isDesign == "true") {
-                        $("#colName").attr("readonly","readonly");
-                        $("#colLabel").attr("readonly","readonly");
-                    } else {
+
                         $("#colName").val("DATA_" + dataAttrValue).trigger("keyup");
                         $("#colLabel").val("字段_" + dataAttrValue).trigger("keyup");
                         dataAttrValue += 1;
-                    }
+
                 }
                 $("#tableName").val(EformEditor.nowTableName);//增加数据库表名称显示
                 if (tableattr.datatype != "0") {

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="avicit.platform6.api.session.SessionHelper"%>
-<%@page import="avicit.platform6.commons.utils.ViewUtil"%>
+<%@page import="com.utils.CommonUtil"%>
 <%
 	String importlibs = "common,table,form";
 %>
@@ -10,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>设置多级标题</title>
-<base href="<%=ViewUtil.getRequestPath(request)%>">
+<base href="<%=CommonUtil.getRequestPath(request)%>">
 
 
 
